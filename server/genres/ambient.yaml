@@ -1,0 +1,177 @@
+# Conduit Genre Module: Ambient
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Ambient
+
+bpm_range: [60, 120]
+# Note: Many ambient works have no fixed tempo or use extremely slow,
+# fluid tempos. When generating MIDI, a tempo may be set for the DAW
+# session but rhythm should be free-flowing and non-metronomic.
+# Alternatively, use tempo automation for gradual drift.
+
+fixed_tempo: false
+
+time_signatures:
+  - "4/4"
+  - "3/4"
+  - "6/8"
+  - "5/4"
+  - "7/8"
+  - free time
+
+scales:
+  - major
+  - lydian
+  - mixolydian
+  - dorian
+  - natural minor
+  - whole tone
+  - pentatonic major
+  - pentatonic minor
+  - chromatic (cluster voicings)
+
+key_tendencies:
+  - C major
+  - D major
+  - E minor
+  - F major
+  - G major
+  - A minor
+  - Bb major
+  - Eb major
+
+rhythm_style: >
+  Largely non-rhythmic or free-time. When rhythmic elements are present,
+  they are slow, sparse, and organic — often implied by the natural attack
+  and decay of sounds rather than by programmed beats. Pulse may emerge
+  from repeating delay patterns, granular textures, or slow LFO modulation
+  rather than from drums. When tempo is present, it is felt loosely and
+  may drift. The emphasis is on sustained tones, gradual evolution, and
+  the absence of rhythmic urgency.
+
+swing: 0.0
+
+instrument_conventions:
+  pads:
+    - Lush, evolving pad textures (wavetable, granular, subtractive)
+    - Layered pad voices with slow attack and long release
+    - Shimmer pads (pitch-shifted reverb feedback)
+    - Spectral pads from processed field recordings
+  drones:
+    - Sustained bass drones (sine, triangle, processed)
+    - Harmonic drones with slow beating and detuning
+    - Bowed string or wind instrument drones (sampled or synthesized)
+    - Feedback drones from guitar or synth
+  textures:
+    - Field recordings (nature, urban, industrial)
+    - Granular synthesis clouds
+    - Tape loops and degraded recordings
+    - Processed noise (filtered, modulated)
+  melodic:
+    - Sparse piano notes with heavy reverb
+    - Guitar (clean, volume-swelled, e-bowed)
+    - Bell-like tones (FM synthesis, celesta, glockenspiel samples)
+    - Slow, simple melodic fragments (2-5 notes)
+  percussion:
+    - Mostly absent
+    - When present: soft, muted hits (brushes, mallets)
+    - Processed found-sound percussion
+    - Delay-derived rhythmic textures
+  vocals:
+    - Wordless vocal pads (processed, layered)
+    - Whispered or distant spoken word
+    - Choir-like textures (heavily reverbed)
+    - Granular vocal processing
+
+bass_style: >
+  Bass in ambient is typically a low drone or sustained tone rather than
+  a rhythmic pattern. Frequencies sit in the 40-100 Hz range, often as a
+  warm sine or triangle wave foundation. Movement comes from slow filter
+  modulation, subtle pitch drift, or harmonic beating between detuned
+  oscillators. Bass notes may sustain for entire sections (8-32 bars or
+  longer) with only the timbre evolving. When bass does move melodically,
+  it follows very slow root motion — whole notes or longer, often just
+  moving between two pitches a fourth or fifth apart.
+
+drum_patterns:
+  general: >
+    Drums are typically absent in ambient music. When rhythmic elements
+    appear, they are textural rather than groove-based.
+  when_present: >
+    Extremely sparse: perhaps a single muted kick every 4-8 bars, or
+    a soft cymbal swell marking a section. Found-sound percussion may
+    appear irregularly. Delay and reverb on any percussive element
+    should be extensive, blurring individual hits into washes of sound.
+  rhythmic_textures: >
+    Instead of drums, rhythm may emerge from: repeating delay patterns
+    on melodic elements, granular density modulation, LFO-driven
+    amplitude changes on pads, or the natural rhythm of field recordings
+    (waves, rain, machinery).
+
+structure:
+  phrase_length: 16  # bars (or equivalent duration)
+  section_length: 32  # bars, very long sections
+  arrangement_length: [64, 256]  # bars; ambient tracks are often very long
+  sections:
+    - opening (32+ bars, single element slowly introduced)
+    - development A (32+ bars, layers gradually added)
+    - development B (32+ bars, timbral evolution)
+    - climax or peak density (16-32 bars, most layers present)
+    - dissolution (32+ bars, gradual removal of elements)
+    - closing (16-32 bars, return to sparse texture or silence)
+  notes: >
+    Ambient structure is non-traditional and organic. There are no drops,
+    builds, or breakdowns in the conventional sense. Instead, the piece
+    evolves continuously through additive and subtractive layering. Changes
+    happen over very long time scales — a filter sweep might take 32 bars.
+    Repetition is embraced but always with micro-variation. Sections blend
+    into each other rather than having hard transitions. The piece should
+    feel like a single, continuous arc rather than a sequence of parts.
+    Fade-ins and fade-outs are common at the start and end.
+
+dynamics:
+  overall: >
+    Very wide dynamic range. Ambient music is typically quiet, with gentle
+    swells and recessions in volume. The loudest moments are still moderate
+    by electronic music standards. Dynamics evolve slowly and smoothly —
+    no sudden jumps in volume. Automation of volume, filter, and effect
+    parameters over long periods is the primary dynamic tool. The music
+    should be listenable at very low volumes while also rewarding close
+    attention at higher levels.
+  velocity_range: [20, 100]
+  compression: minimal to none
+
+effects:
+  - Reverb (massive, long-tail algorithmic reverb; shimmer reverb)
+  - Delay (long, filtered, high feedback for self-generating patterns)
+  - Granular processing (time-stretching, freeze, scatter)
+  - Pitch shifting (octave up in reverb feedback for shimmer)
+  - Chorus and ensemble (slow, deep modulation for width)
+  - Tape saturation (warm, gentle harmonic addition)
+  - Spectral processing (spectral blur, freeze, smear)
+  - Convolution reverb (real spaces: cathedrals, caves, forests)
+  - Ring modulation (subtle, for metallic overtones)
+  - Paulstretch and extreme time-stretching
+  - Volume automation (slow swells over many bars)
+
+reference_artists:
+  - Brian Eno
+  - Aphex Twin (Selected Ambient Works Vol. II)
+  - Tim Hecker
+  - Stars of the Lid
+  - William Basinski
+
+subgenres:
+  - dark ambient
+  - drone ambient
+  - space ambient
+  - ambient dub
+  - new age
+  - lowercase
+  - field recording / phonography
+  - ambient techno
+  - ambient house
+  - isolationism
+  - microsound
+  - hauntology

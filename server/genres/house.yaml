@@ -1,0 +1,160 @@
+# Conduit Genre Module: House
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: House
+
+bpm_range: [118, 130]
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - dorian
+  - mixolydian
+  - major
+  - minor pentatonic
+  - major pentatonic
+  - blues scale
+
+key_tendencies:
+  - C minor
+  - D minor
+  - F minor
+  - G minor
+  - A minor
+  - Bb major
+  - Eb major
+  - F major
+
+rhythm_style: >
+  Four-on-the-floor kick with a slight shuffle or swing applied to
+  hi-hats and percussion. The groove is warm and inviting, descended
+  from disco and soul. Syncopated bass and chord stabs interact with
+  the straight kick to create a push-pull feel. Offbeat open hats are
+  a defining characteristic. Conga and hand percussion patterns add
+  organic, human-feeling rhythmic layers.
+
+swing: 0.15
+
+instrument_conventions:
+  kick:
+    - Deep, round 909-style kick
+    - Warm, boomy kicks with moderate attack
+    - Less distorted than techno; clean low end
+  hihats:
+    - Offbeat open hats (signature house sound)
+    - Shuffled closed hats on 16th notes
+    - Shakers and tambourines doubling hat patterns
+  claps_and_snares:
+    - Claps on beats 2 and 4
+    - Layered clap with snare for body
+    - Finger snaps for minimal sections
+  percussion:
+    - Congas and bongos (often with swing)
+    - Cowbell on quarter or eighth notes
+    - Ride cymbal for drive
+    - Tambourine on offbeats
+  keys_and_chords:
+    - Rhodes and Wurlitzer electric piano
+    - Juno-style pad chords
+    - Organ stabs (gospel/soul influence)
+    - 7th and 9th chord voicings (Cmaj7, Dm9, etc.)
+  synths:
+    - Warm analog pads
+    - Stabby brass-like chords
+    - Filtered saw leads
+  vocals:
+    - Chopped vocal samples
+    - Diva vocal hooks
+    - Spoken word and vocal ad-libs
+    - Gospel-influenced vocal runs
+
+bass_style: >
+  Warm, round, and melodic. Typically follows root-fifth patterns or
+  walking basslines influenced by disco and funk. Sits in the 50-150 Hz
+  range with harmonic content up to 400 Hz for presence. Often played
+  with a slight swing to match the groove. Basslines are more melodically
+  active than in techno, frequently outlining chord changes. Classic
+  house bass uses Moog-style or Juno-106 patches with moderate filter
+  cutoff and subtle resonance.
+
+drum_patterns:
+  kick: >
+    Four-on-the-floor on every quarter note. Consistent and steady,
+    providing the foundation. Occasionally a ghost kick on the "and"
+    of beat 3 for extra push.
+  hihat: >
+    Open hat on every offbeat (eighth note "ands") is the defining
+    pattern. Closed hats on 16th notes with swing applied, velocity
+    accents creating a shuffled groove. Pedal hat on quarter notes
+    underneath.
+  clap_snare: >
+    Beats 2 and 4 with clap as primary sound. Sometimes a rim click
+    substitutes in stripped-down sections. 16th-note clap rolls for
+    fills at phrase endings.
+  percussion: >
+    Conga patterns following tumbao-inspired rhythms. Shakers on 16th
+    notes with swing matching the hats. Cowbell on offbeats or quarter
+    notes for drive.
+
+structure:
+  phrase_length: 8
+  section_length: 16
+  arrangement_length: [64, 128]
+  sections:
+    - intro (16 bars, drums and percussion build)
+    - verse/groove A (16-32 bars, main groove with bass)
+    - breakdown (8-16 bars, melodic/vocal focus, kick drops)
+    - build (4-8 bars, rising energy back to groove)
+    - groove B (16-32 bars, full arrangement)
+    - breakdown 2 (8-16 bars)
+    - final groove (16-32 bars)
+    - outro (16 bars, elements stripped for DJ mixing)
+  notes: >
+    House tracks are more song-oriented than techno, often featuring
+    clear verse-chorus-like sections with vocal hooks. Breakdowns are
+    musical moments rather than just tension — often featuring piano
+    or vocal solos. Energy arc is a gentle wave rather than a constant
+    plateau. 8-bar and 16-bar phrasing is strict for DJ compatibility.
+
+dynamics:
+  overall: >
+    Moderate to high energy with more dynamic range than techno.
+    Breakdowns create genuine drops in energy, and builds restore it
+    gradually. Velocity variation is important for human feel,
+    especially on percussion and keys. The mix is warm and round
+    rather than aggressive.
+  velocity_range: [60, 127]
+  compression: moderate
+
+effects:
+  - Reverb (warm plate on claps, room on keys)
+  - Delay (quarter note and dotted-eighth, filtered)
+  - Chorus on electric piano and pad sounds
+  - Phaser on strings and pads
+  - Low-pass filter sweeps on synth loops
+  - Sidechain compression (subtle, musical pumping)
+  - Tape saturation on bass and master
+  - Vinyl crackle and noise for texture
+
+reference_artists:
+  - Kerri Chandler
+  - Larry Heard
+  - Moodymann
+  - Theo Parrish
+  - Ross From Friends
+
+subgenres:
+  - deep house
+  - Chicago house
+  - acid house
+  - tech house
+  - progressive house
+  - soulful house
+  - Afro house
+  - lo-fi house
+  - garage house
+  - jackin house
+  - disco house

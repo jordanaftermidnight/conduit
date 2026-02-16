@@ -1,0 +1,193 @@
+# Conduit Genre Module: Trance
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Trance
+
+bpm_range: [136, 150]
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - harmonic minor
+  - phrygian dominant (Spanish phrygian)
+  - aeolian
+  - minor pentatonic
+  - major (for euphoric/uplifting passages)
+  - lydian (for uplifting leads)
+  - dorian
+
+key_tendencies:
+  - A minor
+  - C minor
+  - D minor
+  - E minor
+  - F minor
+  - G minor
+  - Bb minor
+  - C major (uplifting trance)
+  - D major (uplifting trance)
+
+rhythm_style: >
+  Four-on-the-floor kick with relentless, driving energy. The rhythmic
+  feel is straight and mechanical, pushing forward with unwavering pulse.
+  Offbeat bass notes (on the "and" of each beat) are a genre-defining
+  characteristic, creating a bouncing, galloping feel. 16th-note
+  arpeggiated synth patterns provide rhythmic and melodic content
+  simultaneously. The overall rhythm is built for sustained energy on
+  the dance floor, with tension and release cycles created by adding
+  and removing the kick drum in breakdowns and builds.
+
+swing: 0.0
+
+instrument_conventions:
+  kick:
+    - Punchy, mid-focused kick with clear click
+    - Less sub-heavy than techno; more mid-range punch
+    - Consistent four-on-the-floor pattern
+    - Often layered with a sub layer for weight
+  bass:
+    - Offbeat bass (hits on "and" of each quarter note)
+    - Acid-style 303 bass in acid trance
+    - Rolling 16th-note basslines
+    - Plucked, short-decay bass tones
+  hihats:
+    - Offbeat open hats (defining pattern)
+    - Closed hats on 16th notes for drive
+    - Ride cymbal patterns in peak sections
+  claps_and_snares:
+    - Clap on beats 2 and 4
+    - Layered clap with snare for power
+    - Clap rolls for build-ups (8th to 16th to 32nd)
+  leads:
+    - Supersaw leads (multiple detuned saw oscillators)
+    - Pluck synths with long delay tails
+    - Acid-style squelchy leads
+    - Euphoric, soaring lead lines
+    - Hoover-style resampled leads
+  pads:
+    - Warm, lush supersaw pads
+    - String-like pad layers
+    - Filtered pad sweeps for transitions
+    - Ethereal, reverb-drenched atmosphere
+  arps:
+    - 16th-note arpeggiated sequences (signature element)
+    - Gated trance arps with sidechain
+    - Minor key arp patterns with filter modulation
+    - Layered arps at different octaves
+  vocals:
+    - Emotional female vocals (full phrases)
+    - Chopped vocal hooks
+    - Vocal chops as melodic elements
+    - Spoken word / motivational speech samples
+  fx:
+    - Risers (white noise sweeps, pitched risers)
+    - Downlifters (reverse risers)
+    - Impact hits on drops
+    - Reverse cymbals at section boundaries
+
+bass_style: >
+  The classic trance bassline sits on the offbeats — hitting on the "and"
+  of each quarter note, creating the genre's signature bouncing rhythm
+  when combined with the on-beat kick. Bass sounds are typically short
+  and plucky with fast decay, using saw-based patches with moderate
+  filter cutoff. The bass occupies the 60-200 Hz range with presence
+  harmonics up to 500 Hz. In acid trance, a 303-style bass with
+  resonant filter sweeps replaces the standard offbeat pattern. Rolling
+  16th-note basslines are common in harder styles. The bass pattern
+  usually follows the root note of the chord progression, occasionally
+  adding passing notes.
+
+drum_patterns:
+  kick: >
+    Straight four-on-the-floor on every quarter note. Unvarying and
+    driving. The kick is removed during breakdowns (8-32 bars) and
+    reintroduced at the drop for maximum impact. No ghost kicks or
+    syncopation — the kick is a metronome.
+  hihat: >
+    Open hat on every offbeat (eighth-note "ands") is the primary
+    pattern. Closed hats on 16th notes layer underneath for drive.
+    Hats continue through breakdowns (sometimes filtered) to maintain
+    pulse even when kick drops out.
+  clap_snare: >
+    Clap on beats 2 and 4, steady and consistent. In build-ups, the
+    clap accelerates from quarter notes to eighths to 16ths to 32nds,
+    creating a snare roll that peaks at the drop. Reverb tail on claps
+    adds space.
+  percussion: >
+    Minimal percussion beyond the core kick-hat-clap pattern. Occasional
+    ride cymbal in peak sections. Shaker on 16th notes in some styles.
+    Trance relies on synth layers rather than percussion for complexity.
+
+structure:
+  phrase_length: 8
+  section_length: 16
+  arrangement_length: [128, 192]  # trance tracks are typically long
+  sections:
+    - intro (16-32 bars, kick and bass establish groove)
+    - build A (16 bars, arps and pads introduced)
+    - breakdown 1 (16-32 bars, kick drops out, melodic/vocal focus)
+    - build-up 1 (8-16 bars, rising energy, snare roll, riser FX)
+    - drop/climax 1 (16-32 bars, full energy, lead melody)
+    - breakdown 2 (16-32 bars, emotional peak, vocals or piano)
+    - build-up 2 (8-16 bars)
+    - drop/climax 2 (16-32 bars, variation or new melody)
+    - outro (16-32 bars, stripped back for DJ mixing)
+  notes: >
+    Trance arrangements are long and follow a clear tension-release arc.
+    The breakdown is the emotional heart of the track — where pads,
+    vocals, and melodies are showcased without drums. The build-up creates
+    anticipation through snare rolls, rising FX, and filter sweeps. The
+    drop is the release — full drums, bass, leads, and arps hitting
+    together. This breakdown-build-drop cycle typically happens twice.
+    The overall arrangement arc goes from sparse to full to sparse to
+    even fuller. DJ intros and outros are long (16-32 bars of just
+    kick and bass) for mixing.
+
+dynamics:
+  overall: >
+    Extreme dynamic arc within a track. Breakdowns are quiet and
+    emotional, builds are tense and rising, drops are maximum energy.
+    This tension-release cycle is the genre's defining structural
+    feature. The drop after a long breakdown should feel like an
+    explosion of energy. Between drops, energy remains high and
+    consistent. The overall loudness is high due to heavy mastering,
+    but the perceived dynamic range from breakdown to drop is wide.
+  velocity_range: [70, 127]
+  compression: heavy (especially on master bus)
+
+effects:
+  - Reverb (large hall on leads, pads, and claps; defining trance sound)
+  - Delay (tempo-synced dotted-eighth on plucks and leads; creates rhythmic echo)
+  - Sidechain compression (kick to bass, kick to pads, kick to arps; creates pumping)
+  - High-pass filter sweeps (on breakdowns, slow sweep up before drop)
+  - Low-pass filter sweeps (on arps and leads for tension)
+  - White noise risers (sweep up over 8-32 bars before drops)
+  - Gating (trance gate on pads, rhythmic chopping)
+  - Chorus and unison (for thickening supersaw sounds)
+  - Stereo widening (on pads and leads for expansive sound)
+  - Distortion (subtle, on bass and leads for presence)
+  - Pitch automation (subtle pitch bend up on risers)
+
+reference_artists:
+  - Armin van Buuren
+  - Paul van Dyk
+  - "Ti\xEBsto (classic era: In Search of Sunrise, Magik series)"
+  - Above & Beyond
+  - Ferry Corsten
+
+subgenres:
+  - uplifting trance
+  - progressive trance
+  - acid trance
+  - psytrance
+  - Goa trance
+  - tech trance
+  - vocal trance
+  - hard trance
+  - Balearic trance
+  - epic trance
+  - dream trance
+  - euro trance

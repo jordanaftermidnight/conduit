@@ -1,0 +1,171 @@
+# Conduit Genre Module: Drum and Bass
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Drum and Bass
+
+bpm_range: [170, 180]
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - harmonic minor
+  - dorian
+  - phrygian
+  - minor pentatonic
+  - whole tone
+  - chromatic
+
+key_tendencies:
+  - E minor
+  - F minor
+  - A minor
+  - C minor
+  - D minor
+  - G minor
+  - Bb minor
+
+rhythm_style: >
+  Breakbeat-based with heavy syncopation. The core rhythmic identity
+  derives from chopped, rearranged, and time-stretched breakbeats —
+  particularly the Amen break, Think break, and Apache break. Kick
+  and snare interplay is the primary rhythmic engine: kick on beat 1,
+  snare on beat 2 (the "half-bar"), with intricate ghost notes, rolls,
+  and fills between. The feel is urgent and propulsive, with the high
+  tempo creating a sense of forward momentum. Syncopated 16th-note
+  hat and ride patterns layer over the breaks for additional drive.
+
+swing: 0.05
+
+instrument_conventions:
+  kick:
+    - Punchy, tight kick with fast decay
+    - Layered sub-kick for weight
+    - Often tuned to the key of the track
+  snare:
+    - Sharp, cracking snare on the half-bar (beat 3 in half-time feel)
+    - Layered break snare with synthetic snare
+    - Ghost snares at low velocity for groove
+    - Snare rolls (16th and 32nd note) for fills
+  hihats:
+    - Rapid 16th-note closed hats
+    - Offbeat open hats for shuffle
+    - Ride cymbal patterns for liquid/jazz-influenced styles
+  breaks:
+    - Chopped and rearranged Amen break
+    - Think break derivatives
+    - Apache and Funky Drummer chops
+    - Layered live breaks with programmed elements
+  bass:
+    - Reese bass (detuned saw oscillators)
+    - Deep sub bass (sine wave, 30-60 Hz)
+    - Wobble bass with LFO modulation
+    - Neuro bass (FM synthesis, heavy processing)
+  synths:
+    - Atmospheric pads (reverb-drenched)
+    - Stab chords (minor 7ths, minor 9ths)
+    - Arp sequences in liquid styles
+    - Dark drones for neurofunk
+  vocals:
+    - Chopped ragga/MC vocal samples
+    - Ethereal female vocals in liquid DnB
+    - Time-stretched vocal textures
+    - Vocal chops as rhythmic elements
+
+bass_style: >
+  Sub-bass is the backbone, sitting in the 30-80 Hz range with enormous
+  weight. The classic Reese bass (two detuned sawtooth oscillators) is
+  a genre-defining sound, creating a growling, phasing texture. Bass
+  movement follows the syncopated rhythm of the drums rather than a
+  steady pattern — bass notes often land on offbeats and tie across bar
+  lines. In neurofunk, the bass is heavily processed with distortion,
+  FM synthesis, and filtering to create aggressive, metallic timbres.
+  In liquid DnB, bass is smoother and more melodic. Sub frequencies are
+  almost always mono and sidechained to the kick.
+
+drum_patterns:
+  kick: >
+    Primary hit on beat 1. Secondary hit often on the "and" of beat 2
+    or beat 3. The two-step pattern (kick on 1, snare on 3) is
+    foundational but heavily ornamented with ghost kicks on 16th-note
+    subdivisions. Kick patterns are syncopated and interact tightly
+    with the bass.
+  snare: >
+    Primary hit on beat 3 (half-bar position in 4/4 at this tempo,
+    giving the half-time feel). Ghost snares on various 16th-note
+    positions. Snare rolls — 16th and 32nd notes — for transitions
+    and fills, often with rising pitch or filter.
+  hihat: >
+    Sixteenth-note patterns with velocity accents. Open hat on offbeats
+    for groove. Rapid closed hat runs for energy. Rides used in
+    jazz-influenced and liquid substyles.
+  breaks: >
+    Chopped breakbeats layered under or replacing programmed drums.
+    The Amen break chop is sliced into individual hits and rearranged
+    into new patterns while retaining the original break's energy and
+    character. Time-stretching and pitch-shifting create variations.
+
+structure:
+  phrase_length: 8
+  section_length: 16
+  arrangement_length: [64, 128]
+  sections:
+    - intro (16 bars, atmospheric build or stripped drums)
+    - first drop (16 bars, full drums and bass)
+    - breakdown (8-16 bars, melodic/atmospheric interlude)
+    - second drop (16-32 bars, variation on first drop)
+    - breakdown 2 (8-16 bars, optional)
+    - final drop (16 bars)
+    - outro (16 bars, stripped for DJ mixing)
+  notes: >
+    DnB tracks revolve around the "drop" — the moment when full drums
+    and bass hit together. Breakdowns strip back to pads, vocals, or
+    sparse percussion to create contrast. The drop is the peak energy
+    moment. Arrangements often feature two or three distinct drops with
+    variation in the bass sound or drum pattern. Intros and outros are
+    typically drum-focused for DJ mixing.
+
+dynamics:
+  overall: >
+    Extreme dynamic contrast between breakdowns (quiet, atmospheric)
+    and drops (maximum energy, full frequency spectrum). The drops
+    themselves are heavily compressed for impact. Velocity programming
+    on ghost notes and hats is critical for groove. The high BPM creates
+    inherent energy, so breakdowns need to strip back significantly to
+    provide contrast.
+  velocity_range: [40, 127]
+  compression: heavy
+
+effects:
+  - Reverb (large hall on snares, atmospheric pads)
+  - Delay (tempo-synced, filtered feedback for dub influence)
+  - Distortion and saturation (on bass, breaks, bus groups)
+  - Resampling and granular processing (on breaks and bass)
+  - Time-stretching (on breaks for texture)
+  - High-pass filter sweeps (for build-ups)
+  - Sidechain compression (kick to bass, essential)
+  - Stereo widening on pads and atmospheric elements
+  - Bit-crushing on breaks for grit
+
+reference_artists:
+  - Noisia
+  - Calibre
+  - Goldie
+  - LTJ Bukem
+  - dBridge
+  - Break
+
+subgenres:
+  - liquid drum and bass
+  - neurofunk
+  - jump-up
+  - jungle
+  - darkstep
+  - techstep
+  - atmospheric DnB
+  - minimal DnB
+  - halftime DnB
+  - ragga jungle
+  - intelligent DnB

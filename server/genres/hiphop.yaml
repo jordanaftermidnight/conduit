@@ -1,0 +1,182 @@
+# Conduit Genre Module: Hip Hop
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Hip Hop
+
+bpm_range: [80, 100]
+# Note: Boom-bap tends toward 85-98 BPM. Trap operates at 130-170 BPM
+# but is felt in half-time at 65-85 BPM. Lo-fi hip hop sits at 70-90 BPM.
+# The primary range covers boom-bap and lo-fi; trap should be programmed
+# at double BPM with half-time feel.
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - minor pentatonic
+  - blues scale
+  - dorian
+  - mixolydian
+  - major pentatonic
+  - harmonic minor
+  - phrygian
+
+key_tendencies:
+  - C minor
+  - D minor
+  - E minor
+  - F minor
+  - G minor
+  - A minor
+  - Bb minor
+  - Ab major
+
+rhythm_style: >
+  Heavily swung and syncopated. The groove is built on a push-pull between
+  the kick and snare, with the kick often landing slightly ahead or behind
+  the grid (MPC-style quantize drift). Boom-bap features a hard-swinging
+  feel with kicks and snares placed with deliberate looseness. The "drunk"
+  or "loose" timing of J Dilla — where hi-hats, kicks, and snares each
+  have slightly different swing amounts — is a foundational aesthetic.
+  Trap variants use rapid hi-hat rolls (32nd notes, triplets) for rhythmic
+  excitement over a half-time kick-snare backbone.
+
+swing: 0.55
+
+instrument_conventions:
+  kick:
+    - Boom-bap: punchy, boomy MPC-style kick (SP-1200, MPC60)
+    - Trap: 808 kick with long, pitched sub tail
+    - Lo-fi: vinyl-textured, soft-attack kick
+  snare:
+    - Boom-bap: cracking, bright snare with snap
+    - Trap: tight, clipped snare or rimshot
+    - Lo-fi: muted, soft snare with vinyl character
+  hihats:
+    - Boom-bap: swung eighth or 16th notes, open hat accents
+    - Trap: rapid 16th/32nd/triplet rolls with velocity variation
+    - Lo-fi: loose, shuffled closed hats
+  percussion:
+    - Shakers and tambourines
+    - Vinyl scratches and DJ cuts
+    - Finger snaps
+    - Cowbell and woodblock
+  bass:
+    - 808 sub bass (tuned, sustained)
+    - Sampled upright or electric bass
+    - Moog-style bass for funk influence
+    - Sub bass with pitch glides (trap)
+  keys_and_chords:
+    - Sampled soul and jazz piano chops
+    - Rhodes electric piano
+    - Wurlitzer
+    - Organ stabs
+  synths:
+    - Trap leads (bells, plucks, flutes)
+    - Dark pad textures
+    - Portamento synth leads
+    - Arp patterns in trap production
+  samples:
+    - Chopped soul, funk, and jazz records
+    - Vocal samples and ad-libs
+    - Vinyl noise and crackle
+    - Orchestral stabs (strings, horns)
+
+bass_style: >
+  Two primary approaches. Boom-bap: sampled bass from vinyl (upright bass,
+  Fender bass, Moog bass), often with warmth and grit from the source
+  material. Patterns follow the sample's original phrasing or are chopped
+  to create new lines. Trap: the 808 kick IS the bass — a tuned 808 with
+  a long, sustained sub tail that functions as both kick and bassline.
+  808 patterns use pitch glides (portamento) and rhythmic variations.
+  The sub sits at 30-80 Hz with harmonics from saturation extending up
+  to 200 Hz. In both cases, bass is central and prominent in the mix.
+
+drum_patterns:
+  kick: >
+    Boom-bap: syncopated pattern with kick on beat 1 and varied
+    placements on beats 2-4, often on the "and" of beat 2 or "and"
+    of beat 3. Patterns change every 1-2 bars. Trap: kick on beat 1,
+    with 808 sub tail sustaining, additional kicks sparse. Lo-fi:
+    similar to boom-bap but softer with deliberate timing drift.
+  snare: >
+    Primarily on beats 2 and 4 across all substyles. Boom-bap may
+    add ghost snares on 16th-note positions. Trap snare is tight
+    and often accompanied by a clap layer. Snare rolls (16th, 32nd)
+    for fills and transitions.
+  hihat: >
+    Boom-bap: swung eighth notes or 16th notes with strong accent on
+    offbeats. Open hat on the "and" of beat 4 for turnarounds. Trap:
+    programmed 16th-note base with 32nd-note and triplet rolls,
+    velocity ramping from quiet to loud for the "roll" effect. Lo-fi:
+    loose, minimal hat pattern with heavy swing.
+  percussion: >
+    Sample-based: chopped percussion from vinyl, finger snaps,
+    tambourine hits. Scratches and DJ-style cuts for variation.
+    Trap: 808 toms (pitched) for melodic fills, snare rolls.
+
+structure:
+  phrase_length: 4  # bars per phrase (hip hop uses shorter phrases)
+  section_length: 8  # bars per section
+  arrangement_length: [32, 64]  # bars for instrumental beats
+  sections:
+    - intro (4-8 bars, sample or atmospheric texture)
+    - verse beat (8-16 bars, main groove)
+    - hook/chorus (4-8 bars, melodic variation)
+    - verse beat (8-16 bars)
+    - hook/chorus (4-8 bars)
+    - bridge or breakdown (4-8 bars, optional)
+    - outro (4-8 bars)
+  notes: >
+    Hip hop beats are built for vocals and follow verse-chorus song
+    structure. Instrumental beats are shorter than electronic dance
+    tracks. The groove must leave space for vocal rhythms. Variations
+    between verse and chorus are often subtle — a new sample chop, an
+    added instrument, or a filter change rather than a dramatic shift.
+    4-bar and 8-bar loops are the primary compositional unit.
+
+dynamics:
+  overall: >
+    Moderate overall loudness with emphasis on the low end (kick/bass)
+    and the snare cutting through. Dynamic interest comes from swing
+    and velocity variation rather than arrangement changes. The beat
+    should breathe — not everything hits at full velocity. Ghost notes
+    and varied velocities on hats are critical for groove. The "head-nod"
+    factor depends on dynamic feel more than any other genre.
+  velocity_range: [40, 127]
+  compression: moderate to heavy on drums, light on samples
+
+effects:
+  - Vinyl saturation and tape warmth
+  - SP-1200 / MPC bit reduction and aliasing
+  - Reverb (short room on snare, plate on vocals)
+  - Delay (slapback on snare, quarter-note on vocal chops)
+  - Sidechain compression (subtle, to 808 bass)
+  - Low-pass filtering on samples (dusty, lo-fi character)
+  - Chorus and vibrato on keys (tape wobble)
+  - Compression (heavy parallel compression on drums)
+  - Vinyl crackle and noise layers
+  - Pitch-shifting on samples (slowed-down soul chops)
+
+reference_artists:
+  - J Dilla
+  - Madlib
+  - Knxwledge
+  - Metro Boomin
+  - Alchemist
+  - Kenny Beats
+
+subgenres:
+  - boom-bap
+  - trap
+  - lo-fi hip hop
+  - abstract hip hop
+  - instrumental hip hop
+  - cloud rap
+  - phonk
+  - jazz rap
+  - chopped and screwed
+  - sample-based hip hop
+  - drill

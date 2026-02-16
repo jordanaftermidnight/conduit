@@ -1,0 +1,147 @@
+# Conduit Genre Module: Techno
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Techno
+
+bpm_range: [125, 140]
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - phrygian
+  - locrian
+  - chromatic
+  - whole tone
+  - dorian
+
+key_tendencies:
+  - C minor
+  - D minor
+  - E minor
+  - F minor
+  - A minor
+  - G minor
+  - Bb minor
+
+rhythm_style: >
+  Straight, quantized, and relentlessly metronomic. Rhythmic interest comes
+  from layering polyrhythmic hat and percussion patterns over an unwavering
+  four-on-the-floor kick. Syncopation is used sparingly and deliberately.
+  Emphasis on repetition and subtle variation over time rather than complex
+  rhythmic phrasing. Ghost notes and flams on percussion create micro-level
+  texture without disrupting the grid.
+
+swing: 0.0
+
+instrument_conventions:
+  kick:
+    - Hard, punchy 909-style kicks with long low-end tail
+    - Distorted, clipped kicks for industrial textures
+    - Layered kicks with transient click and sub body
+  hihats:
+    - Closed hats on offbeats or 16th-note patterns
+    - Open hats for accent and tension
+    - Metallic, filtered, or bitcrushed hat textures
+  claps_and_snares:
+    - Claps on beats 2 and 4
+    - Layered noise-based snares
+    - Rimshots for variation
+  percussion:
+    - Toms (pitched, often tuned to key)
+    - Shakers and rides for high-frequency movement
+    - Industrial hits, metallic stabs, noise bursts
+  synths:
+    - Dark, detuned pads for atmosphere
+    - Acid basslines (303-style)
+    - Stab chords (minor, dissonant)
+    - Single-oscillator drones
+  effects_sends:
+    - Reverb tails on claps and percussion
+    - Delay throws on synth stabs
+    - Distortion and saturation on bus groups
+
+bass_style: >
+  Typically monophonic and rooted in the low-mid range (40-120 Hz). Often
+  driven by a 303-style acid line with resonant filter sweeps, or a deep
+  sub-bass sine wave locked to the kick pattern. Bass movement is minimal
+  in pitch — often staying on one or two notes per phrase — with timbral
+  variation (filter cutoff, distortion, FM amount) providing interest.
+  Sidechain compression to the kick is standard to create pumping space.
+
+drum_patterns:
+  kick: >
+    Four-on-the-floor (hits on every quarter note). Variations include
+    removing the kick on beat 1 of breakdown sections or adding offbeat
+    ghost kicks at low velocity for drive.
+  hihat: >
+    Eighth or sixteenth note patterns. Common to alternate velocities
+    for a mechanical-yet-human feel. Open hats on the "and" of beat 4
+    for turnaround accents.
+  clap_snare: >
+    Hits on beats 2 and 4. Occasional 16th-note rolls or fills before
+    section transitions. Sometimes removed entirely for stripped-back
+    passages.
+  percussion: >
+    Polyrhythmic layers of rides, toms, and metallic hits. Often in
+    3-against-4 or 5-against-4 groupings to create tension against the
+    kick grid. Gradually introduced and removed for arrangement dynamics.
+
+structure:
+  phrase_length: 8  # bars per phrase (minimum musical idea)
+  section_length: 16  # bars per section (intro, body, breakdown)
+  arrangement_length: [64, 128]  # bars total, typical range
+  sections:
+    - intro (16-32 bars, gradual layering)
+    - main loop A (16-32 bars)
+    - breakdown (8-16 bars, kick drops out)
+    - main loop B (16-32 bars, new element introduced)
+    - outro (16-32 bars, gradual stripping)
+  notes: >
+    Techno arrangements are additive/subtractive: elements are introduced
+    and removed one at a time over long periods. Transitions happen at
+    8- or 16-bar boundaries. Dramatic changes are rare — the focus is on
+    hypnotic evolution. DJ-friendly intros and outros with just kick and
+    hats for 16+ bars are standard.
+
+dynamics:
+  overall: >
+    Consistently high energy with subtle dynamic shifts. Loudness is
+    relatively constant due to heavy compression and limiting. Dynamic
+    interest comes from frequency-domain changes (filter sweeps, EQ
+    automation) rather than volume changes. Breakdowns provide the
+    primary contrast by removing the kick and low end.
+  velocity_range: [80, 127]
+  compression: heavy
+
+effects:
+  - Reverb (dark, long-tail on percussion; short plate on claps)
+  - Delay (ping-pong, tempo-synced dotted-eighth or quarter)
+  - Distortion and saturation (on bass, kicks, master bus)
+  - Bitcrushing and sample rate reduction
+  - High-pass and low-pass filter sweeps
+  - Sidechain compression (kick-triggered on bass and pads)
+  - Phaser and flanger on synth loops
+  - Granular processing on textural elements
+
+reference_artists:
+  - Surgeon
+  - Blawan
+  - Paula Temple
+  - Regis
+  - Ansome
+  - Perc
+
+subgenres:
+  - dub techno
+  - industrial techno
+  - acid techno
+  - minimal techno
+  - hard techno
+  - hypnotic techno
+  - ambient techno
+  - Detroit techno
+  - loop techno
+  - Berghain / function techno

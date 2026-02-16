@@ -1,0 +1,9 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.0.0
+pyyaml>=6.0              # for genre module YAML files
+
+# Provider SDKs — install what you need:
+anthropic>=0.40.0        # for Claude
+openai>=1.50.0           # for GPT-4o, LM Studio, llama.cpp, vLLM
+# Ollama uses raw HTTP — no SDK needed
