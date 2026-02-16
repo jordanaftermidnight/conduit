@@ -697,11 +697,23 @@ def main():
         f.write(json_str)
 
     # Save .amxd with AMPF binary wrapper for Ableton
-    # JS files are kept external (co-located with .amxd) — node.script
-    # requires files on disk and can't use embedded resources.
+    # [js] objects need files embedded in the AMPF container.
+    # node.script needs files on disk (installed to Max Packages by package-device.sh).
     amxd_path = os.path.join(script_dir, output)
     json_bytes = json_str.encode("utf-8")
-    amxd_data = wrap_ampf(json_bytes, device_type="midi")
+
+    # Embed [js] dependencies in AMPF (session-context, midi-applicator, param-applicator)
+    js_embed = []
+    for js_name in ["session-context.js", "midi-applicator.js", "param-applicator.js"]:
+        js_path = os.path.join(script_dir, js_name)
+        if os.path.exists(js_path):
+            with open(js_path, "rb") as jf:
+                js_embed.append((js_name, jf.read()))
+            print(f"  Embedded: {js_name}")
+        else:
+            print(f"  WARNING: {js_name} not found, skipping embed")
+
+    amxd_data = wrap_ampf(json_bytes, device_type="midi", resources=js_embed)
     with open(amxd_path, "wb") as f:
         f.write(amxd_data)
 

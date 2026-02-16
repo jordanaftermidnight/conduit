@@ -1,10 +1,9 @@
 """
-Conduit — LLM ↔ Ableton Live Bridge Server
-Runs locally on MacBook Air. Receives requests from M4L device,
-forwards to any configured LLM provider, returns structured responses.
+Conduit — AI MIDI Server
 
-Supports: Claude, GPT-4o, Ollama (Qwen3), LM Studio, llama.cpp, vLLM, and more.
-Auto-detects system RAM and selects the best local model.
+Local bridge server: receives requests from the M4L device,
+forwards to Ollama (llama3.2), returns structured MIDI JSON.
+Also supports Claude, GPT-4o, LM Studio, llama.cpp, and vLLM.
 """
 
 import json
@@ -130,7 +129,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Conduit",
-    description="LLM ↔ Ableton Live Bridge — AI music production assistant",
+    description="AI MIDI generation for Ableton Live",
     version="1.0.0",
     lifespan=lifespan,
 )

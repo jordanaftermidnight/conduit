@@ -1,5 +1,5 @@
 /**
- * conduit-bridge.js
+ * conduit-bridge.js — Conduit
  *
  * Runs inside Max for Live via the [node.script] object.
  * Communicates with the local Conduit server to send prompts

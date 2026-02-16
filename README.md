@@ -1,144 +1,215 @@
-# Conduit
+<p align="center">
+  <img src="assets/logo-dark.svg" alt="Conduit" width="400">
+</p>
 
-**LLM ↔ Ableton Live bridge with auto-failover.**
+<h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
+<p align="center">AI MIDI generation for Ableton Live</p>
 
-Route any LLM — Claude, GPT-4o, Ollama, LM Studio, llama.cpp — into your Ableton session via a Max for Live device. Everything runs locally.
+Conduit is a Max for Live device that connects Ableton Live to a local AI running on your own machine. Type a prompt like *"generate a 4x4 techno drum beat"* and it writes MIDI clips directly into your session. No cloud API keys, no subscriptions, no sending your music anywhere. Everything runs locally and privately through [Ollama](https://ollama.com).
 
-## Architecture
+---
 
-```
-┌──────────────────────┐      HTTP (localhost:9321)      ┌────────────────────┐
-│   Ableton Live       │ ◄──────────────────────────────►│  Conduit Server    │
-│                      │                                  │  (FastAPI/Python)  │
-│  ┌────────────────┐  │    POST /ask  {prompt, session}  │                    │
-│  │  M4L Device    │──┼─────────────────────────────────►│  ┌──────────────┐  │
-│  │  (node.script) │  │                                  │  │ Provider     │  │
-│  │                │◄─┼──────────────────────────────────┤  │ Registry +   │  │
-│  └────────────────┘  │    {text, json_blocks, provider} │  │ Circuit      │  │
-│                      │                                  │  │ Breaker      │  │
-│  Session Context ────┤    Auto-sent every 5s            │  └──────────────┘  │
-│  (BPM, key, tracks)  │                                  │                    │
-└──────────────────────┘                                  └────────────────────┘
-         MacBook Air                                            MacBook Air
-```
+## What It Does
 
-## Quick Start
+Conduit has two modes:
 
-### 1. Start the Conduit server
+### Chat Mode
+Talk to the AI about your session. Ask for ideas, get feedback, discuss arrangements. It can see your BPM, time signature, track names, and more — so the answers are relevant to what you're actually working on.
+
+### Generate Mode
+Tell the AI what you want and get MIDI clips written straight into your selected track. Drums, melodies, basslines, chord progressions — whatever you need to get moving.
+
+---
+
+## Features
+
+**Genre-aware** — 8 built-in genre modules (techno, house, dnb, dubstep, hip-hop, ambient, IDM, trance) that shape how the AI thinks about rhythm, velocity, and note choice. Pick one from the dropdown.
+
+**Session-aware** — The device polls Ableton every 5 seconds for BPM, time signature, track names, selected track, and transport state. The AI uses all of this as context when generating.
+
+**Pattern clipboard** — Every pattern you generate is auto-saved. Hit Paste to re-insert the last one into a new clip slot. Up to 20 patterns stored per session.
+
+**Undo** — Changed your mind? Revert the last generated clip instantly.
+
+**100% local** — Runs on Ollama with llama3.2 (3B parameter model). No API keys. No cloud. Works offline once you've pulled the model.
+
+---
+
+## Requirements
+
+- macOS (Apple Silicon or Intel)
+- Ableton Live 10, 11, or 12 with Max for Live
+- Python 3.8+
+- [Ollama](https://ollama.com) (free, open source)
+- ~4GB free RAM for the model
+
+---
+
+## Setup
+
+This takes about 5 minutes. ☕
+
+### 1. Install Ollama
+
+Download from [ollama.com](https://ollama.com), drag it to Applications, and open it once so it finishes installing.
+
+### 2. Pull the model
+
+Open Terminal and run:
 
 ```bash
-cd server
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY="sk-ant-..."
-python main.py
+ollama pull llama3.2
 ```
 
-Server starts at `http://127.0.0.1:9321`. Verify with:
+This downloads the AI model (~2GB). Only needs to happen once.
+
+### 3. Install the device
+
+Double-click `Start Conduit.command` in the project folder. Or if you prefer the terminal:
+
 ```bash
-curl http://127.0.0.1:9321/health
+./package-device.sh --install
 ```
 
-### 2. Build the M4L device
+### 4. Launch the server
 
-See [`m4l/PATCHER_GUIDE.md`](m4l/PATCHER_GUIDE.md) for step-by-step instructions.
+Double-click `Start Conduit.command`. It checks your dependencies, starts the server, and shows a green status when everything's ready.
 
-Copy the three JS files into your M4L device's project folder:
-- `conduit-bridge.js` — node.script HTTP client
-- `session-context.js` — LOM session state gatherer
-- `midi-applicator.js` — clip creator from LLM MIDI output
+### 5. Load in Ableton
 
-### 3. Use it
+Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track.
 
-Load the M4L device on any MIDI track and start prompting:
+### 6. Wait a few seconds
 
-| Prompt | What happens |
+The device needs about 5 seconds to connect to the server. You'll see the status bar update when it's ready.
+
+### 7. Type a prompt and press Enter
+
+That's it. You're making music with AI now.
+
+---
+
+## Using the Device
+
+### The Interface
+
+```
+┌─────────────────────────────────────────────┐
+│  CONDUIT       [chat/generate ▾]  [genre ▾] │  <- mode + genre dropdowns
+│                                              │
+│  [ type your prompt here...              ]   │  <- prompt input
+│                                              │
+│  ┌────────────────────────────────────┐      │
+│  │  response display area             │      │  <- AI response
+│  │                                    │      │
+│  └────────────────────────────────────┘      │
+│                                              │
+│  [Reset] [Generate] [Paste] [Undo] [Clear]   │  <- buttons
+│  ● Connected                                 │  <- status bar
+└─────────────────────────────────────────────┘
+```
+
+### Generating MIDI
+
+1. Select a MIDI track in Ableton (or create a new one)
+2. Set mode to **generate** in the dropdown
+3. Pick a genre
+4. Type what you want — *"4-bar techno kick pattern"*, *"8-note ambient melody in C minor"*, whatever comes to mind
+5. Press Enter or click Generate
+6. The clip appears in the first empty slot on your selected track
+
+### Chatting
+
+1. Set mode to **chat**
+2. Ask anything — *"what scale would work over these chords?"*, *"suggest a drum fill for the bridge"*, *"how should I arrange this into a full track?"*
+3. The AI sees your session context so it can give answers that actually make sense for your project
+
+---
+
+## Tips for Better Prompts
+
+The more specific you are, the better the results.
+
+**Be specific about what you want:**
+> "16-note hi-hat pattern with offbeat accents" beats "make some hats" every time.
+
+**Mention note counts and length:**
+> "8 notes", "16 steps", "4-bar phrase", "2 bars of..."
+
+**Reference genre conventions:**
+> "303-style acid bassline", "amen break variation", "four-on-the-floor with ghost snares"
+
+**Use music theory if you know it:**
+> The AI understands scales, intervals, chord names, and rhythmic subdivisions. Don't be afraid to get technical.
+
+**Keep it conversational if you don't:**
+> "something dark and minimal" or "funky bassline that grooves" works too. The genre module fills in the rest.
+
+---
+
+## Buttons
+
+| Button | What it does |
 |--------|-------------|
-| "Generate a 4-bar acid bassline in A minor" | Creates a MIDI clip on selected track |
-| "What effects chain would work for industrial kicks?" | Text response in device |
-| "Make it more syncopated" | Regenerates with conversation context |
-| "Suggest parameter tweaks for my Wavetable synth" | Returns param change suggestions |
+| **Reset** | Clears conversation history. Fresh start. |
+| **Generate** | Sends your prompt as a generate request (same as pressing Enter in generate mode). |
+| **Paste** | Re-inserts the last generated pattern into a new clip slot. |
+| **Undo** | Removes the last clip that was written. |
+| **Clear** | Clears the prompt field and response display. |
 
-## Providers
+---
 
-Conduit auto-detects available providers on startup:
-
-| Provider | Config | Best for |
-|----------|--------|----------|
-| Claude | `ANTHROPIC_API_KEY` env var | Creative suggestions, complex tasks |
-| GPT-4o | `OPENAI_API_KEY` env var | General purpose |
-| Ollama | Running on `localhost:11434` | Zero-latency local inference, no API cost |
-| LM Studio | Running on `localhost:1234` | Local models with GUI |
-| Any OpenAI-compatible | Register via API | llama.cpp, vLLM, text-gen-webui |
-
-### Switching from M4L
-
-```
-cmd providers              → list all providers with health
-cmd provider ollama        → switch to Ollama
-cmd model qwen2.5:7b       → change model on current provider
-cmd health                 → show active provider + circuit state
-cmd circuit                → full circuit breaker breakdown
-cmd reset-circuit ollama   → manually reset a tripped breaker
-```
-
-## Circuit Breaker
-
-Ported from IRIS orchestrator — minimal version. If a provider fails 3 times consecutively, Conduit:
-
-1. **Trips the circuit** — stops sending to that provider
-2. **Auto-failover** — routes to the next healthy provider in the chain
-3. **Cooldown** (60s) — then sends one test request
-4. **Recovery** — if the test succeeds, circuit closes and traffic resumes
-
-Status is visible in the M4L device: `● closed` `◐ half-open` `○ open`
-
-## API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Server status + circuit breaker state |
-| `/ask` | POST | Send prompt + session context, get response (with auto-failover) |
-| `/providers` | GET | List all providers with health scores |
-| `/providers/switch` | POST | Switch active provider + optional model |
-| `/providers/add` | POST | Register new provider at runtime |
-| `/providers/health` | GET | Circuit breaker state for all providers |
-| `/providers/reset-circuit/{name}` | POST | Manual circuit reset |
-| `/providers/ollama/models` | GET | List Ollama models |
-| `/reset` | POST | Clear conversation history |
-| `/history` | GET | View conversation history (debug) |
-
-## Modes
-
-- **chat**: Conversational — ask questions, get advice, discuss production
-- **generate**: Structured output — LLM prioritises returning MIDI/param JSON blocks
-
-## Push 3 Standalone Limitation
-
-Push 3 standalone cannot run the Conduit server (no general-purpose OS access). This setup requires Ableton running on the MacBook Air with the M4L device. When in standalone mode, Conduit won't be available.
-
-## Troubleshooting
-
-| Issue | Fix |
-|-------|-----|
-| "conduit offline" in status | Start the Conduit server first |
-| No MIDI clip created | Make sure a MIDI track is selected (not return/master) |
-| Timeout errors | LLM generating a long response — increase timeout in `conduit-bridge.js` |
-| "No providers available" | Set an API key or start Ollama |
-| Circuit stays open | `cmd reset-circuit <name>` or wait 60s for auto-recovery |
-
-## File Structure
+## Project Structure
 
 ```
 conduit/
-├── server/
-│   ├── main.py              # FastAPI server with auto-failover
-│   ├── providers.py         # Provider abstraction + circuit breaker
-│   └── requirements.txt     # Python dependencies
-├── m4l/
-│   ├── conduit-bridge.js    # node.script HTTP client
-│   ├── session-context.js   # LOM session context gatherer
-│   ├── midi-applicator.js   # MIDI clip creator
-│   └── PATCHER_GUIDE.md     # How to build the M4L device
-├── HANDOFF.md               # CCLI handoff document
-└── README.md
+├── server/                  # Python server (FastAPI + Ollama)
+│   └── genres/              # Genre module YAML files
+├── m4l/                     # Max for Live device source
+├── docs/                    # Technical documentation
+├── tests/                   # Test suite
+├── assets/                  # Logo and branding
+├── Start Conduit.command    # Double-click launcher
+└── package-device.sh        # Build + install script
 ```
+
+For the full technical breakdown — architecture, API reference, AMPF format spec, signal flow, and how to extend Conduit with custom providers and genres — see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+
+---
+
+## Troubleshooting
+
+**"Server not responding"**
+Make sure `Start Conduit.command` is running in the background. Check the terminal window — it should show a green status.
+
+**"No model found"**
+You need to pull the model first. Open Terminal and run `ollama pull llama3.2`.
+
+**Device shows "initializing..."**
+Give it about 5 seconds. The device needs a moment to handshake with the server.
+
+**No MIDI output**
+Make sure you have a MIDI track selected in Ableton and the device is set to **generate** mode, not chat.
+
+**Clips sound wrong or unexpected**
+Try being more specific in your prompt. Mention the key, scale, number of notes, and rhythmic feel you're going for. Switching genres can also make a big difference.
+
+---
+
+## Support the Project
+
+If Conduit is useful in your workflow, consider buying me a coffee.
+
+**[ko-fi.com/jordanaftermidnight](https://ko-fi.com/jordanaftermidnight)**
+
+---
+
+## License
+
+MIT License. Copyright (c) 2026 Jordanaftermidnight.
+
+Free to use, modify, and distribute. See [LICENSE](LICENSE) for details.
+
+---
+
+*Conduit v1.0 — your session, your AI, your machine.* 🎹

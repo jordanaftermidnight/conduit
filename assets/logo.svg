@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <defs>
+    <linearGradient id="signal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5B8DEF"/>
+      <stop offset="100%" stop-color="#48D6A0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Conduit mark: two vertical bars (channel walls) with signal flowing through -->
+  <rect x="12" y="20" width="4" height="60" rx="2" fill="#E0E0E0"/>
+  <rect x="52" y="20" width="4" height="60" rx="2" fill="#E0E0E0"/>
+
+  <!-- Signal waveform flowing through the channel -->
+  <path d="M 16 50 C 22 30, 28 70, 34 50 C 40 30, 46 70, 52 50"
+        stroke="url(#signal)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Input dot (left) -->
+  <circle cx="8" cy="50" r="4" fill="#5B8DEF"/>
+
+  <!-- Output dot (right) -->
+  <circle cx="60" cy="50" r="4" fill="#48D6A0"/>
+
+  <!-- Wordmark -->
+  <text x="78" y="62" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="38" font-weight="700" letter-spacing="4" fill="#E0E0E0">CONDUIT</text>
+</svg>

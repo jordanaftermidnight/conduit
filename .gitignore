@@ -24,6 +24,8 @@ Thumbs.db
 *.swp
 *.swo
 
+# Test/cache
+.pytest_cache/
+
 # Misc
 *.log
-{server,m4l}
