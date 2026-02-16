@@ -501,7 +501,7 @@ healthCheck().then(function (health) {
     Max.outlet("status", "server offline — auto-launching...");
     return launchServer().then(function (launched) {
         if (!launched) {
-            Max.outlet("status", "server offline — run install.sh");
+            Max.outlet("status", "server offline — run Start Conduit.command");
             return;
         }
 

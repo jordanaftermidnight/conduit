@@ -36,7 +36,7 @@ if ! command -v ollama &>/dev/null; then
     echo ""
     echo "WARNING: Ollama is not installed."
     echo "  Conduit needs Ollama for local AI model inference."
-    echo "  Install from: https://ollama.ai"
+    echo "  Install from: https://ollama.com"
     echo ""
 else
     echo "  Ollama:  $(ollama --version 2>&1 | head -1)"

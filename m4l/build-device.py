@@ -7,7 +7,7 @@ Architecture:
     type prefix: "text ...", "midi ...", "params ...", "status ...".
     A single [route text midi params status] splits them.
 
-    A [gate] blocks all control messages (cmd, session) for 5 seconds
+    A [gate] blocks all control messages (cmd, session) for 2 seconds
     on startup, giving node.script time to initialize. The gate opens
     after delay, and the metro starts simultaneously.
 
@@ -351,9 +351,9 @@ def build_patcher():
     boxes.append(b)
 
     # ── STARTUP GATE ─────────────────────────────────────────────
-    # gate blocks all control messages for 5 seconds while node.script loads
+    # gate blocks all control messages for 2 seconds while node.script loads
     #
-    # loadbang → delay 5000 → t 1 1
+    # loadbang → delay 2000 → t 1 1
     #                          |   |
     #                          |   → metro 5000 (starts session polling)
     #                          → gate (opens, allowing cmd/session through)
@@ -462,7 +462,7 @@ def build_patcher():
     lines.append(pl(lb_id, 0, init_status_id, 0))
     lines.append(pl(init_status_id, 0, status_id, 0))
 
-    # -- Startup timing: loadbang → delay 5000 → t 1 1 --
+    # -- Startup timing: loadbang → delay 2000 → t 1 1 --
     lines.append(pl(lb_id, 0, delay_id, 0))
     lines.append(pl(delay_id, 0, t11_id, 0))
 
@@ -725,7 +725,7 @@ def main():
     print(f"  Also saved: {maxpat_path}  (plain JSON for Max editor)")
     print()
     print("  node.script → outlet 0 → [route text midi params status undo]")
-    print("  [gate] blocks cmd/session for 5s while node.script loads")
+    print("  [gate] blocks cmd/session for 2s while node.script loads")
     print("  prompt goes direct (not gated)")
 
 

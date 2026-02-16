@@ -4,7 +4,7 @@
 
 <h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
 <p align="center">AI MIDI generation for Ableton Live</p>
-<p align="center"><a href="https://ko-fi.com/jordanaftermidnight">Support this project on Ko-fi</a></p>
+<p align="center"><a href="https://maxforlive.com/library/device/14573/conduit-ai-midi-generator">Download on maxforlive.com</a> · <a href="https://ko-fi.com/jordanaftermidnight">Support this project on Ko-fi</a></p>
 
 Conduit is a Max for Live device that connects Ableton Live to a local AI running on your own machine. Type a prompt like *"generate a 4x4 techno drum beat"* and it writes MIDI clips directly into your session. No cloud API keys, no subscriptions, no sending your music anywhere. Everything runs locally and privately through [Ollama](https://ollama.com).
 
@@ -38,9 +38,9 @@ Tell the AI what you want and get MIDI clips written straight into your selected
 
 ## Requirements
 
-- macOS (Apple Silicon or Intel)
-- Ableton Live 10, 11, or 12 with Max for Live
-- Python 3.8+
+- macOS (Apple Silicon or Intel) or Windows
+- Ableton Live 11 or 12 with Max for Live
+- Python 3.9+
 - [Ollama](https://ollama.com) (free, open source)
 - ~4GB free RAM for the model
 
@@ -66,15 +66,17 @@ This downloads the AI model (~2GB). Only needs to happen once.
 
 ### 3. Install the device
 
-Double-click `Start Conduit.command` in the project folder. Or if you prefer the terminal:
+Open Terminal in the project folder and run:
 
 ```bash
 ./package-device.sh --install
 ```
 
+This builds the device and copies it to Ableton's User Library.
+
 ### 4. Launch the server
 
-Double-click `Start Conduit.command`. It checks your dependencies, starts the server, and shows a green status when everything's ready.
+Double-click `Start Conduit.command`. It checks your dependencies, starts the server, and shows a status message when everything's ready. Keep this window open.
 
 ### 5. Load in Ableton
 

@@ -164,18 +164,14 @@ function writeNotesIntoClip(clipApi, notes, clipLength, ccMessages) {
     // Set clip length and looping before writing notes
     clipApi.set("looping", 0);
 
-    // Use select_all_notes + replace_selected_notes pattern for reliability.
-    // First clear any existing notes.
-    clipApi.call("select_all_notes");
-    clipApi.call("replace_selected_notes");
-    clipApi.call("notes", 0);
-    clipApi.call("done");
+    // Clear existing notes using Live 11+ API
+    clipApi.call("remove_notes_extended", 0, 0, clipLength + 1, 128);
 
     // Brief operational pause — the LOM sometimes needs a tick
     // (In Max JS, this is synchronous, but calling get forces a round-trip)
     clipApi.get("length");
 
-    // Now write the new notes using set_notes
+    // Write notes using set_notes (sequential protocol)
     clipApi.call("set_notes");
     clipApi.call("notes", notes.length);
 
@@ -486,10 +482,8 @@ function undo() {
             // We replaced notes in an existing clip — clear the notes
             var clip = new LiveAPI(lastAction.clipPath);
             if (parseInt(clip.id, 10) !== 0) {
-                clip.call("select_all_notes");
-                clip.call("replace_selected_notes");
-                clip.call("notes", 0);
-                clip.call("done");
+                var undoLen = parseFloat(clip.get("length")) || 16;
+                clip.call("remove_notes_extended", 0, 0, undoLen + 1, 128);
                 log("undo: cleared notes from", lastAction.clipName);
                 outlet(0, "undo: cleared notes from \"" + lastAction.clipName + "\"");
             } else {
