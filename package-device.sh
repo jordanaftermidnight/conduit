@@ -3,15 +3,12 @@
 # package-device.sh — Build and package Conduit M4L device for Ableton Live
 #
 # Creates a distributable "Conduit" folder containing:
-#   - Conduit.amxd       (Max for Live device)
-#   - conduit-bridge.js  (node.script — server communication)
-#   - midi-applicator.js (clip writer)
-#   - param-applicator.js (parameter applicator)
-#   - session-context.js (Ableton session state)
+#   - Conduit.amxd       (Max for Live device, with [js] files embedded in AMPF)
+#   - conduit-bridge.js  (node.script — also installed to Max Packages for search path)
 #
 # Usage:
 #   ./package-device.sh           # Build + package to dist/Conduit/
-#   ./package-device.sh --install # Build + install to Ableton User Library
+#   ./package-device.sh --install # Build + install to Ableton User Library + Max Packages
 
 set -euo pipefail
 
@@ -23,6 +20,10 @@ DIST_DIR="$SCRIPT_DIR/dist/Conduit"
 ABLETON_MIDI_FX_ALT="$HOME/Documents/User Library/Presets/MIDI Effects/Max MIDI Effect"
 ABLETON_MIDI_FX="$HOME/Music/Ableton/User Library/Presets/MIDI Effects/Max MIDI Effect"
 ABLETON_M4L="$HOME/Music/Ableton/User Library/Presets/Max for Live"
+
+# Max Packages — node.script finds files here via Max's search path
+MAX8_PKG="$HOME/Documents/Max 8/Packages/Conduit/javascript"
+MAX9_PKG="$HOME/Documents/Max 9/Packages/Conduit/javascript"
 
 echo "╔═══════════════════════════════════════╗"
 echo "║   Conduit — M4L Device Packager       ║"
@@ -40,24 +41,16 @@ echo "→ Packaging device..."
 rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
-# Copy the device file
+# Copy the device file (.amxd has [js] files embedded in AMPF)
 cp "$M4L_DIR/Conduit.amxd" "$DIST_DIR/"
+echo "  ✓ Conduit.amxd"
 
-# Copy all JS dependencies (must be co-located with .amxd)
-for js in conduit-bridge.js midi-applicator.js param-applicator.js session-context.js; do
-    if [ -f "$M4L_DIR/$js" ]; then
-        cp "$M4L_DIR/$js" "$DIST_DIR/"
-        echo "  ✓ $js"
-    else
-        echo "  ✗ MISSING: $js"
-        exit 1
-    fi
-done
+# Copy conduit-bridge.js alongside .amxd (node.script needs it on disk)
+cp "$M4L_DIR/conduit-bridge.js" "$DIST_DIR/"
+echo "  ✓ conduit-bridge.js"
 
 echo
 echo "✓ Device packaged: $DIST_DIR/"
-echo "  Contents:"
-ls -la "$DIST_DIR/" | tail -n +2
 echo
 
 # ── Step 3: Optional install ──
@@ -87,7 +80,29 @@ if [ "${1:-}" = "--install" ]; then
 
     rm -rf "$INSTALL_DIR"
     cp -R "$DIST_DIR" "$INSTALL_DIR"
-    echo "  ✓ Installed to: $INSTALL_DIR"
+    echo "  ✓ Device: $INSTALL_DIR"
+
+    # ── Install node.script dependency to Max Packages search path ──
+    echo
+    echo "→ Installing conduit-bridge.js to Max Packages..."
+    INSTALLED_PKG=0
+    for PKG_DIR in "$MAX8_PKG" "$MAX9_PKG"; do
+        PARENT="$(dirname "$PKG_DIR")"
+        GRANDPARENT="$(dirname "$PARENT")"
+        if [ -d "$GRANDPARENT" ]; then
+            mkdir -p "$PKG_DIR"
+            cp "$M4L_DIR/conduit-bridge.js" "$PKG_DIR/"
+            echo "  ✓ $PKG_DIR/conduit-bridge.js"
+            INSTALLED_PKG=1
+        fi
+    done
+
+    if [ "$INSTALLED_PKG" -eq 0 ]; then
+        echo "  ⚠ No Max Packages directory found"
+        echo "    node.script may not find conduit-bridge.js"
+        echo "    Manually copy it to ~/Documents/Max 8/Packages/Conduit/javascript/"
+    fi
+
     echo
     echo "  In Ableton: Browser → User Library → MIDI Effects → Conduit"
 else

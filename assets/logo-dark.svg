@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <defs>
+    <linearGradient id="signal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5B8DEF"/>
+      <stop offset="100%" stop-color="#48D6A0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="100" rx="8" fill="#1A1A2E"/>
+
+  <!-- Channel walls -->
+  <rect x="22" y="24" width="4" height="52" rx="2" fill="#3A3A5C"/>
+  <rect x="62" y="24" width="4" height="52" rx="2" fill="#3A3A5C"/>
+
+  <!-- Signal waveform -->
+  <path d="M 26 50 C 32 30, 38 70, 44 50 C 50 30, 56 70, 62 50"
+        stroke="url(#signal)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Input dot -->
+  <circle cx="18" cy="50" r="4" fill="#5B8DEF"/>
+
+  <!-- Output dot -->
+  <circle cx="70" cy="50" r="4" fill="#48D6A0"/>
+
+  <!-- Wordmark -->
+  <text x="88" y="60" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="36" font-weight="700" letter-spacing="4" fill="#E8E8F0">CONDUIT</text>
+</svg>
