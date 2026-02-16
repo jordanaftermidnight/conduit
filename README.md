@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-dark.svg" alt="Conduit" width="400">
+  <img src="assets/logo-dark.svg" alt="Conduit" width="295">
 </p>
 
 <h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
