@@ -207,16 +207,15 @@ class OllamaProvider(BaseProvider):
     Supports grammar-constrained JSON output via Ollama's `format` parameter,
     guaranteeing valid structured MIDI/param data at inference level.
 
-    Recommended models (Qwen3 family, Apache 2.0):
-      - qwen3:8b  (default for 16GB — full capability)
-      - qwen3:4b  (8GB systems)
-      - qwen3:1.7b (minimal RAM)
+    Default model: llama3.2 (selected via autodetect benchmarking).
+    Qwen3 thinking mode is disabled when detected (think: false) and
+    any <think> leakage is stripped from output.
     """
     name = "ollama"
 
     def __init__(
         self,
-        model: str = "qwen3:8b",
+        model: str = "llama3.2",
         base_url: str = "http://localhost:11434",
         num_ctx: int = 1024,
     ):
