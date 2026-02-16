@@ -1,0 +1,175 @@
+# Conduit Genre Module: Dubstep
+# Tier 1 Core Electronic Genre
+# Injected into LLM system prompts to guide MIDI generation
+
+name: Dubstep
+
+bpm_range: [138, 142]
+# Note: Dubstep is written at 138-142 BPM but felt in half-time at 69-71 BPM.
+# The snare hits on beat 3 of the full-tempo bar, creating the half-time feel.
+# When generating MIDI, program at the full BPM but think in half-time phrases.
+
+halftime_feel: true
+effective_bpm_range: [69, 71]
+
+time_signatures:
+  - "4/4"
+
+scales:
+  - natural minor
+  - phrygian
+  - harmonic minor
+  - minor pentatonic
+  - chromatic
+  - locrian
+
+key_tendencies:
+  - D minor
+  - E minor
+  - F minor
+  - G minor
+  - C minor
+  - A minor
+  - Bb minor
+
+rhythm_style: >
+  Half-time feel over a double-time BPM. The snare or clap lands on beat 3
+  of each bar (at full tempo), giving a slow, heavy, head-nodding groove
+  when felt in half-time. Rhythmic space is a defining characteristic —
+  patterns are sparse with deliberate gaps that let the sub bass breathe.
+  Syncopation comes from the bass rhythm rather than the drums. Triplet
+  subdivisions appear in some patterns, especially in more modern variants.
+  The overall feel is heavy, cavernous, and weighted.
+
+swing: 0.0
+
+instrument_conventions:
+  kick:
+    - Deep, sub-heavy kick with long tail
+    - Often tuned low (D1-G1) and blended with sub bass
+    - Tight, punchy kick for contrast in sections without sub
+  snare_clap:
+    - Snare on beat 3 (half-time position)
+    - Tight, clipped snare in the Deep Medi style
+    - Reverb-drenched snare in atmospheric sections
+    - Clap layered with snare for crack
+  hihats:
+    - Sparse, offbeat hat patterns
+    - Shuffled 16th-note hats at low velocity
+    - Minimal — often just a few hits per bar
+  percussion:
+    - Sparse hand percussion (bongos, congas)
+    - Dub-influenced percussion stabs
+    - Metallic hits and scraped textures
+    - Woodblocks and rim clicks for space
+  bass:
+    - Massive sub bass (sine or low-passed triangle)
+    - Wobble bass (LFO on filter cutoff)
+    - "Weight" — sustained sub notes that define the genre
+    - Bass sits in 30-80 Hz range, almost purely sub
+  synths:
+    - Dark, sparse pads and drones
+    - Minor chord stabs (reverbed, delayed)
+    - Eerie melodic fragments
+    - Detuned square wave leads
+  vocals:
+    - Dub-style vocal echoes
+    - Ragga and MC samples
+    - Ghostly, processed vocal textures
+    - Sparse vocal phrases, heavily effected
+
+bass_style: >
+  The sub bass IS dubstep. Enormous, room-shaking sine wave sub bass in
+  the 30-60 Hz range is the genre's defining characteristic. Bass notes
+  are long, sustained, and often slide between pitches (portamento).
+  The "wobble" — an LFO modulating filter cutoff on a bass note — is
+  a signature technique, though deep/minimal dubstep uses it sparingly.
+  Bass patterns are rhythmic but spacious, often syncopated against the
+  drums with rests that create tension. In DMZ/Deep Medi style, the sub
+  is clean and pure; in more aggressive styles, it's layered with
+  mid-range harmonics and distortion. Always mono below 100 Hz.
+
+drum_patterns:
+  kick: >
+    Hit on beat 1 of each half-time bar (beats 1 and 3 at full BPM).
+    Additional ghost kicks sometimes appear on offbeat 16th notes.
+    The kick often blends into or is replaced by the sub bass on the
+    downbeat. Sparse — sometimes only 2-4 kicks per full-tempo bar.
+  snare: >
+    Single hit on beat 3 at full BPM (beat 2 in half-time feel). This
+    is the defining rhythmic marker. Occasionally doubled with a ghost
+    snare. Snare rolls (16th or 32nd notes) are used sparingly for
+    transitions. The snare is tight and dry in deep dubstep, more
+    reverbed in atmospheric variants.
+  hihat: >
+    Extremely sparse. A few offbeat hits per bar, or shuffled 16th
+    notes at very low velocity. Space is more important than pattern.
+    Some tracks have no programmed hats at all, relying on percussion
+    and the breaks for high-frequency content.
+  percussion: >
+    Dub-influenced: sparse hand drums, rim clicks, and metallic hits
+    placed irregularly to create an off-kilter, spacious groove.
+    Percussion often has heavy delay and reverb, creating rhythmic
+    echoes that fill the space between hits.
+
+structure:
+  phrase_length: 8  # bars in half-time feel (16 bars at full BPM)
+  section_length: 16  # half-time bars
+  arrangement_length: [48, 96]  # half-time bars
+  sections:
+    - intro (8-16 bars, atmospheric, sparse percussion)
+    - build (4-8 bars, rising tension, drums establish)
+    - drop (16 bars, full sub bass and drums)
+    - breakdown (8-16 bars, sub drops out, atmospheric)
+    - second drop (16 bars, variation or different bass pattern)
+    - outro (8-16 bars, elements stripped)
+  notes: >
+    Dubstep tracks are spacious and rely on tension between presence
+    and absence. The drop — when sub bass enters — is the focal point.
+    Arrangements are relatively short compared to techno or house.
+    Space and silence are compositional tools. Sections breathe and
+    transitions are often marked by drum fills, risers, or simply
+    removing elements. The 2-bar loop is a common compositional unit
+    within drops.
+
+dynamics:
+  overall: >
+    Extreme contrast between quiet, atmospheric passages and
+    earth-shaking drops. The sub bass dominates the dynamic range
+    when present. Breakdowns can be very quiet and sparse. The
+    half-time feel gives everything a heavy, weighted quality.
+    Velocity is generally moderate-to-high on main hits with wide
+    variation on ghost notes and percussion.
+  velocity_range: [50, 127]
+  compression: moderate to heavy on drums, light on sub
+
+effects:
+  - Reverb (massive hall/cave reverb on snares and percussion)
+  - Delay (dub-style delay with high feedback, filtered)
+  - Sub-bass enhancement and saturation
+  - High-pass filtering for builds
+  - Sidechain compression (kick to sub bass)
+  - Spring reverb on percussion (dub influence)
+  - Vinyl crackle and dark ambient textures
+  - Pitch-shifting and tape stop effects
+  - Echo and feedback loops (dub tradition)
+
+reference_artists:
+  - Digital Mystikz
+  - Mala
+  - Kode9
+  - Skream
+  - Burial
+  - Commodo
+
+subgenres:
+  - deep dubstep
+  - minimal dubstep
+  - brostep
+  - riddim
+  - future garage
+  - UK bass
+  - post-dubstep
+  - dungeon sound
+  - tearout
+  - purple sound
