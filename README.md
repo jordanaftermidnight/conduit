@@ -4,6 +4,7 @@
 
 <h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
 <p align="center">AI MIDI generation for Ableton Live</p>
+<p align="center"><a href="https://ko-fi.com/jordanaftermidnight">Support this project on Ko-fi</a></p>
 
 Conduit is a Max for Live device that connects Ableton Live to a local AI running on your own machine. Type a prompt like *"generate a 4x4 techno drum beat"* and it writes MIDI clips directly into your session. No cloud API keys, no subscriptions, no sending your music anywhere. Everything runs locally and privately through [Ollama](https://ollama.com).
 
@@ -193,14 +194,6 @@ Make sure you have a MIDI track selected in Ableton and the device is set to **g
 
 **Clips sound wrong or unexpected**
 Try being more specific in your prompt. Mention the key, scale, number of notes, and rhythmic feel you're going for. Switching genres can also make a big difference.
-
----
-
-## Support the Project
-
-If Conduit is useful in your workflow, consider buying me a coffee.
-
-**[ko-fi.com/jordanaftermidnight](https://ko-fi.com/jordanaftermidnight)**
 
 ---
 
