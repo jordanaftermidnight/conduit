@@ -27,5 +27,8 @@ Thumbs.db
 # Test/cache
 .pytest_cache/
 
+# Docs (local only)
+docs/MAXFORLIVE_LISTING.md
+
 # Misc
 *.log
