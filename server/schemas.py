@@ -6,7 +6,7 @@ Used for:
 - Type safety throughout the server
 """
 
-from __future__ import annotations
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field, TypeAdapter
 
@@ -36,17 +36,17 @@ class CCMessage(BaseModel):
 class MIDIPattern(BaseModel):
     """A pattern of MIDI notes (what the LLM generates for MIDI requests)."""
 
-    midi_notes: list[MIDINote]
-    drum_notes: list[MIDINote] | None = Field(default=None, description="Drum/percussion notes using GM drum map pitches (kick=36, snare=38, etc.)")
-    cc_messages: list[CCMessage] | None = Field(default=None, description="MIDI CC automation messages")
-    swing: float | None = Field(default=None, ge=0, le=100, description="Swing amount 0-100%")
-    quantize: str | None = Field(default=None, description="Quantization grid e.g. '1/4', '1/8', '1/16', '1/32'")
+    midi_notes: List[MIDINote]
+    drum_notes: Optional[List[MIDINote]] = Field(default=None, description="Drum/percussion notes using GM drum map pitches (kick=36, snare=38, etc.)")
+    cc_messages: Optional[List[CCMessage]] = Field(default=None, description="MIDI CC automation messages")
+    swing: Optional[float] = Field(default=None, ge=0, le=100, description="Swing amount 0-100%")
+    quantize: Optional[str] = Field(default=None, description="Quantization grid e.g. '1/4', '1/8', '1/16', '1/32'")
 
 
 class ParamChange(BaseModel):
     """A single parameter change suggestion."""
 
-    track: int | str = Field(description="Track index or name")
+    track: Union[int, str] = Field(description="Track index or name")
     device: str = Field(description="Device name on the track")
     param: str = Field(description="Parameter name")
     value: float = Field(description="Target value")
@@ -55,19 +55,19 @@ class ParamChange(BaseModel):
 class ParamSuggestion(BaseModel):
     """Parameter change suggestions from LLM."""
 
-    params: list[ParamChange]
+    params: List[ParamChange]
 
 
 class MIDIGenerationResponse(BaseModel):
     """Combined response that may contain MIDI and/or params."""
 
-    midi_notes: list[MIDINote] | None = None
-    drum_notes: list[MIDINote] | None = None
-    cc_messages: list[CCMessage] | None = None
-    params: list[ParamChange] | None = None
-    swing: float | None = Field(default=None, ge=0, le=100)
-    quantize: str | None = None
-    explanation: str | None = None
+    midi_notes: Optional[List[MIDINote]] = None
+    drum_notes: Optional[List[MIDINote]] = None
+    cc_messages: Optional[List[CCMessage]] = None
+    params: Optional[List[ParamChange]] = None
+    swing: Optional[float] = Field(default=None, ge=0, le=100)
+    quantize: Optional[str] = None
+    explanation: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
@@ -96,11 +96,11 @@ def get_param_json_schema() -> dict:
 # Validation helpers
 # ---------------------------------------------------------------------------
 
-_midi_note_list_adapter = TypeAdapter(list[MIDINote])
-_cc_message_list_adapter = TypeAdapter(list[CCMessage])
+_midi_note_list_adapter = TypeAdapter(List[MIDINote])
+_cc_message_list_adapter = TypeAdapter(List[CCMessage])
 
 
-def validate_midi_notes(data: list[dict]) -> list[MIDINote]:
+def validate_midi_notes(data: List[dict]) -> List[MIDINote]:
     """Validate a list of raw dicts and return typed MIDINote objects.
 
     Raises ``pydantic.ValidationError`` if any note is invalid.
@@ -108,7 +108,7 @@ def validate_midi_notes(data: list[dict]) -> list[MIDINote]:
     return _midi_note_list_adapter.validate_python(data)
 
 
-def validate_cc_messages(data: list[dict]) -> list[CCMessage]:
+def validate_cc_messages(data: List[dict]) -> List[CCMessage]:
     """Validate a list of raw dicts and return typed CCMessage objects.
 
     Raises ``pydantic.ValidationError`` if any message is invalid.
