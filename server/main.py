@@ -45,7 +45,7 @@ MIDI_FORMAT_SCHEMA = {
                     "pitch": {"type": "integer", "minimum": 0, "maximum": 127},
                     "velocity": {"type": "integer", "minimum": 1, "maximum": 127},
                     "start_beat": {"type": "number", "minimum": 0},
-                    "duration_beats": {"type": "number", "minimum": 0.0625},
+                    "duration_beats": {"type": "number", "minimum": 0.125},
                 },
                 "required": ["pitch", "velocity", "start_beat", "duration_beats"],
             },
@@ -222,6 +222,11 @@ def build_user_message(req: BridgeRequest) -> str:
         count = _count_requested_notes(req.prompt)
         if count > 0:
             parts.append(f"Generate exactly {count} notes.")
+        else:
+            # Default note count when user doesn't specify
+            is_drum = bool(re.search(r'drum|kick|snare|hi.?hat|perc|beat', req.prompt, re.IGNORECASE))
+            default = 16 if is_drum else 8
+            parts.append(f"Generate at least {default} notes.")
 
     return "\n\n".join(parts)
 
@@ -390,7 +395,7 @@ def validate_and_fix_notes(json_blocks: list[dict]) -> list[dict]:
                 n["pitch"] = max(0, min(127, int(n["pitch"])))
                 n["velocity"] = max(1, min(127, int(n.get("velocity", 100))))
                 n["start_beat"] = max(0.0, float(n.get("start_beat", 0)))
-                n["duration_beats"] = max(0.0625, float(n.get("duration_beats", 0.25)))
+                n["duration_beats"] = max(0.125, float(n.get("duration_beats", 0.25)))
                 cleaned.append(n)
             block[key] = cleaned
 
@@ -565,6 +570,10 @@ async def ask(req: BridgeRequest):
         if gen_provider.is_available():
             import time as _time
             requested_notes = _count_requested_notes(req.prompt)
+            if requested_notes == 0:
+                # Default: ensure short patterns get tiled to something usable
+                is_drum = bool(re.search(r'drum|kick|snare|hi.?hat|perc|beat', req.prompt, re.IGNORECASE))
+                requested_notes = 16 if is_drum else 8
             max_attempts = 2  # original + 1 retry
 
             for attempt in range(max_attempts):

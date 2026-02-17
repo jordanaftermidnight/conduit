@@ -91,7 +91,7 @@ GENERATE_SYSTEM_PROMPT = (
     "  Accents: 110-127. Normal: 70-100. Ghost notes: 20-50.\n"
     "  Accent beats 1 & 3, softer on offbeats. Hi-hats alternate accent/ghost.\n"
     "- start_beat: float >= 0. Space notes across beats, not all at 0.\n"
-    "- duration_beats: float > 0. Minimum 0.0625 (1/64 note).\n"
+    "- duration_beats: float > 0. Minimum 0.125 (1/32 note). Use 0.25-1.0 for melodies, 0.125-0.5 for drums/percussion.\n"
     "- Generate EXACTLY the number of notes requested. If asked for 8 notes, output 8.\n"
     "- For drums: kick=36 snare=38 closed_hh=42 open_hh=46 clap=39 ride=51 crash=49.\n"
     '- Optional keys: "drum_notes":[...], "cc_messages":[{"cc_number":74,"value":64,"beat":0.0}], "swing":0-100, "quantize":"1/16" (or triplets: "1/8t","1/16t").\n'
@@ -138,17 +138,71 @@ def _parse_simple_yaml(path: Path) -> dict:
         pass
 
     # Minimal parser for our genre YAML format
+    # Handles: key: value, key: [list], nested dicts, folded scalars (>), literal scalars (|)
     data = {}
     current_key = None
     current_list = None
+    block_key = None       # key being filled by a folded/literal block
+    block_lines = []       # accumulated block lines
+    block_sep = " "        # " " for folded (>), "\n" for literal (|)
+    parent_key = None      # for nested dicts (one level deep)
+
+    def _flush_block():
+        nonlocal block_key, block_lines
+        if block_key and block_lines:
+            text = block_sep.join(block_lines).strip()
+            if parent_key and isinstance(data.get(parent_key), dict):
+                data[parent_key][block_key] = text
+            else:
+                data[block_key] = text
+        block_key = None
+        block_lines = []
+
+    def _parse_value(v):
+        """Parse a scalar value string into the appropriate Python type."""
+        if not v:
+            return v
+        # Inline list: [a, b, c]
+        if v.startswith("[") and v.endswith("]"):
+            items = v[1:-1].split(",")
+            return [i.strip().strip('"').strip("'") for i in items if i.strip()]
+        # Boolean
+        if v.lower() in ("true", "yes"):
+            return True
+        if v.lower() in ("false", "no"):
+            return False
+        # Number
+        try:
+            return int(v)
+        except ValueError:
+            pass
+        try:
+            return float(v)
+        except ValueError:
+            pass
+        # String
+        return v.strip('"').strip("'")
 
     with open(path) as f:
         for line in f:
-            stripped = line.strip()
+            raw = line.rstrip("\n")
+            stripped = raw.strip()
+            indent = len(raw) - len(raw.lstrip())
 
             # Skip comments and empty lines
             if not stripped or stripped.startswith("#"):
+                if block_key and block_lines:
+                    block_lines.append("")  # preserve paragraph breaks
                 continue
+
+            # Accumulate block scalar lines (indented continuation)
+            # A line is a block continuation if it's indented and doesn't look like a key: value pair
+            is_kv = ":" in stripped and not stripped.startswith("-") and not stripped.startswith("[")
+            if block_key and indent > 0 and not is_kv:
+                block_lines.append(stripped)
+                continue
+            elif block_key:
+                _flush_block()
 
             # List item under current key
             if stripped.startswith("- ") and current_key:
@@ -164,23 +218,41 @@ def _parse_simple_yaml(path: Path) -> dict:
                 key, _, value = stripped.partition(":")
                 key = key.strip()
                 value = value.strip()
-                current_key = key
 
-                if not value:
-                    # Next lines will be list items or block
+                # Nested dict detection: indented key-value under a bare parent key
+                if indent > 0 and parent_key and parent_key != key:
+                    # Initialize parent as dict if not already
+                    if not isinstance(data.get(parent_key), dict):
+                        data[parent_key] = {}
+                    current_key = key
+                    if value in (">", "|"):
+                        block_key = key
+                        block_lines = []
+                        block_sep = " " if value == ">" else "\n"
+                    elif value:
+                        data[parent_key][key] = _parse_value(value)
                     continue
 
-                # Inline list: [a, b, c]
-                if value.startswith("[") and value.endswith("]"):
-                    items = value[1:-1].split(",")
-                    data[key] = [i.strip().strip('"').strip("'") for i in items if i.strip()]
-                # Number
-                elif value.replace(".", "").replace("-", "").isdigit():
-                    data[key] = float(value) if "." in value else int(value)
-                # String
-                else:
-                    data[key] = value.strip('"').strip("'")
+                # Top-level key
+                if indent == 0:
+                    parent_key = None
 
+                current_key = key
+
+                if value in (">", "|"):
+                    # Folded or literal block scalar
+                    block_key = key
+                    block_lines = []
+                    block_sep = " " if value == ">" else "\n"
+                elif not value:
+                    # Empty value — next lines will be list items or nested dict
+                    # Don't pre-create; let the first continuation line decide the type
+                    parent_key = key
+                else:
+                    parent_key = None
+                    data[key] = _parse_value(value)
+
+    _flush_block()
     return data
 
 
@@ -278,6 +350,20 @@ def _build_genre_brief(genre_name: str) -> str:
             parts.append(f"Keys: {', '.join(str(k) for k in kt)}.")
         else:
             parts.append(f"Keys: {kt}.")
+
+    # Velocity range from genre
+    dynamics = genre.get("dynamics", {})
+    if isinstance(dynamics, dict) and "velocity_range" in dynamics:
+        vr = dynamics["velocity_range"]
+        if isinstance(vr, list) and len(vr) == 2:
+            parts.append(f"Velocity: {vr[0]}-{vr[1]}.")
+
+    # First sentence of rhythm style for musical context
+    rhythm = genre.get("rhythm_style", "")
+    if isinstance(rhythm, str) and rhythm.strip():
+        first_sentence = rhythm.strip().split(". ")[0].strip()
+        if first_sentence:
+            parts.append(f"Rhythm: {first_sentence}.")
 
     return " ".join(parts)
 
