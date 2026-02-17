@@ -56,9 +56,9 @@ fi
 if ! python3 -c "import fastapi" 2>/dev/null; then
     echo ""
     echo "  Installing Python dependencies..."
-    pip3 install -q fastapi uvicorn httpx 2>/dev/null || {
+    pip3 install -q -r "$SERVER_DIR/requirements.txt" 2>/dev/null || {
         echo "  ERROR: Failed to install dependencies."
-        echo "  Try manually: pip3 install fastapi uvicorn httpx"
+        echo "  Try manually: pip3 install -r server/requirements.txt"
         echo ""
         echo "Press any key to close..."
         read -n 1

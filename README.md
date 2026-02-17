@@ -46,9 +46,7 @@ Tell the AI what you want and get MIDI clips written straight into your selected
 
 ---
 
-## Setup
-
-This takes about 5 minutes. ☕
+## Setup — macOS
 
 ### 1. Install Ollama
 
@@ -76,19 +74,42 @@ This builds the device and copies it to Ableton's User Library.
 
 ### 4. Launch the server
 
-Double-click `Start Conduit.command`. It checks your dependencies, starts the server, and shows a status message when everything's ready. Keep this window open.
+Double-click `Start Conduit.command`. It installs dependencies, starts the server, and keeps it running. Keep this window open.
 
 ### 5. Load in Ableton
 
-Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track.
+Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track. Wait a few seconds for the device to connect, then type a prompt and press Enter.
 
-### 6. Wait a few seconds
+---
 
-The device needs about 5 seconds to connect to the server. You'll see the status bar update when it's ready.
+## Setup — Windows
 
-### 7. Type a prompt and press Enter
+### 1. Install Ollama
 
-That's it. You're making music with AI now.
+Download the Windows installer from [ollama.com/download](https://ollama.com/download) and run it.
+
+### 2. Install Python
+
+Download Python 3.9+ from [python.org/downloads](https://python.org/downloads). **Check "Add to PATH"** during installation.
+
+### 3. Install the device
+
+Copy the device files manually:
+
+- Copy `dist\Conduit\Conduit.amxd` and `m4l\conduit-bridge.js` to:
+  `Documents\Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect\Conduit\`
+- Copy `conduit-bridge.js` to:
+  `Documents\Max 8\Packages\Conduit\javascript\`
+
+Create these folders if they don't exist.
+
+### 4. Launch the server
+
+Double-click `Start Conduit.bat`. It pulls the AI model, installs dependencies, and starts the server. Keep this window open.
+
+### 5. Load in Ableton
+
+Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track. Wait a few seconds for the device to connect, then type a prompt and press Enter.
 
 ---
 
