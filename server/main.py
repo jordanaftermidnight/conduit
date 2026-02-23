@@ -130,7 +130,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Conduit",
     description="AI MIDI generation for Ableton Live",
-    version="1.0.0",
+    version="1.1.0",
     lifespan=lifespan,
 )
 
@@ -940,10 +940,11 @@ async def clear_patterns():
 
 # ── Run ──────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    import sys
     uvicorn.run(
         "main:app",
         host="127.0.0.1",
         port=9321,
-        reload=True,
+        reload="--reload" in sys.argv,
         log_level="info",
     )

@@ -2,7 +2,7 @@
   <img src="assets/logo-dark.svg" alt="Conduit" width="295">
 </p>
 
-<h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
+<h3 align="center">Conduit v1.1 by Jordanaftermidnight</h3>
 <p align="center">AI MIDI generation for Ableton Live</p>
 <p align="center"><a href="https://maxforlive.com/library/device/14573/conduit-ai-midi-generator">Download on maxforlive.com</a> · <a href="https://ko-fi.com/jordanaftermidnight">Support this project on Ko-fi</a></p>
 
@@ -52,33 +52,15 @@ Tell the AI what you want and get MIDI clips written straight into your selected
 
 Download from [ollama.com](https://ollama.com), drag it to Applications, and open it once so it finishes installing.
 
-### 2. Pull the model
+### 2. Install Conduit
 
-Open Terminal and run:
+Double-click **`Install Conduit.command`**. It checks your system, downloads the AI model (~2GB first time), installs dependencies, and copies everything into place.
 
-```bash
-ollama pull llama3.2
-```
+> **Note:** If macOS blocks the script, right-click it and choose **Open** instead of double-clicking.
 
-This downloads the AI model (~2GB). Only needs to happen once.
+### 3. Load in Ableton
 
-### 3. Install the device
-
-Open Terminal in the project folder and run:
-
-```bash
-./package-device.sh --install
-```
-
-This builds the device and copies it to Ableton's User Library.
-
-### 4. Launch the server
-
-Double-click `Start Conduit.command`. It installs dependencies, starts the server, and keeps it running. Keep this window open.
-
-### 5. Load in Ableton
-
-Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track. Wait a few seconds for the device to connect, then type a prompt and press Enter.
+Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track. The server starts automatically — no terminal window needed.
 
 ---
 
@@ -92,39 +74,13 @@ Download the Windows installer from [ollama.com/download](https://ollama.com/dow
 
 Download Python 3.9+ from [python.org/downloads](https://python.org/downloads). During installation, **check the box that says "Add Python to PATH"** — this is important.
 
-### 3. Download Conduit
+### 3. Install Conduit
 
-Go to [github.com/jordanaftermidnight/conduit](https://github.com/jordanaftermidnight/conduit), click the green **Code** button, then **Download ZIP**. Extract the ZIP somewhere easy to find, like your Desktop or Documents folder.
+Double-click **`Install Conduit.bat`**. It checks your system, downloads the AI model (~2GB first time), installs dependencies, and copies everything into place.
 
-### 4. Install the device
+### 4. Load in Ableton
 
-You need to copy two files from the Conduit folder into Ableton's device folders. Open File Explorer and do the following:
-
-**Copy the device file:**
-
-1. In the Conduit folder, go to `dist` > `Conduit`
-2. Copy `Conduit.amxd`
-3. Paste it into: `C:\Users\YourName\Documents\Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect\Conduit\`
-
-**Copy the bridge script:**
-
-1. In the Conduit folder, go to `m4l`
-2. Copy `conduit-bridge.js`
-3. Paste it into **both** of these locations:
-   - `C:\Users\YourName\Documents\Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect\Conduit\`
-   - `C:\Users\YourName\Documents\Max 8\Packages\Conduit\javascript\`
-
-> **Note:** Replace `YourName` with your actual Windows username. If any of these folders don't exist yet, create them yourself — right-click > New > Folder.
-
-### 5. Launch the server
-
-In the Conduit folder, double-click **`Start Conduit.bat`**. The first time you run it, it will download the AI model (~2GB) and install Python dependencies — this only happens once. After that, you'll see a message saying the server is running. **Keep this window open** while you use Conduit.
-
-### 6. Load in Ableton
-
-Open Ableton Live, go to **Browser > User Library > MIDI Effects > Conduit**, and drag the device onto a MIDI track. Wait a few seconds for it to connect (the status bar will say "Connected"), then type a prompt and press Enter.
-
-> Every time you want to use Conduit, double-click `Start Conduit.bat` before opening Ableton.
+Open Ableton Live, go to **Browser > User Library > MIDI Effects > Conduit**, and drag the device onto a MIDI track. The server starts automatically — no terminal window needed.
 
 ---
 
@@ -202,15 +158,19 @@ The more specific you are, the better the results.
 
 ```
 conduit/
-├── server/                  # Python server (FastAPI + Ollama)
-│   └── genres/              # Genre module YAML files
-├── m4l/                     # Max for Live device source
-├── docs/                    # Technical documentation
-├── tests/                   # Test suite
-├── assets/                  # Logo and branding
-├── Start Conduit.command    # macOS launcher (double-click)
-├── Start Conduit.bat        # Windows launcher (double-click)
-└── package-device.sh        # Build + install script (macOS)
+├── server/                      # Python server (FastAPI + Ollama)
+│   └── genres/                  # Genre module YAML files
+├── m4l/                         # Max for Live device source
+├── docs/                        # Technical documentation
+├── tests/                       # Test suite
+├── assets/                      # Logo and branding
+├── Install Conduit.command      # macOS installer (double-click)
+├── Install Conduit.bat          # Windows installer (double-click)
+├── Uninstall Conduit.command    # macOS uninstaller
+├── Uninstall Conduit.bat        # Windows uninstaller
+├── Start Conduit.command        # macOS manual launcher (optional)
+├── Start Conduit.bat            # Windows manual launcher (optional)
+└── package-device.sh            # Build + install script (macOS)
 ```
 
 For the full technical breakdown — architecture, API reference, AMPF format spec, signal flow, and how to extend Conduit with custom providers and genres — see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
@@ -219,8 +179,14 @@ For the full technical breakdown — architecture, API reference, AMPF format sp
 
 ## Troubleshooting
 
+**"server not installed — run Install Conduit"**
+Double-click `Install Conduit.command` (macOS) or `Install Conduit.bat` (Windows) to install. Check `~/Documents/Conduit/server.log` for errors.
+
+**"server launch timeout"**
+The server took too long to start. Check that Ollama is running (`ollama serve`) and that llama3.2 is downloaded (`ollama pull llama3.2`). See `~/Documents/Conduit/server.log` for details.
+
 **"Server not responding"**
-Make sure the server is running — `Start Conduit.command` on macOS or `Start Conduit.bat` on Windows. Check the terminal window for errors.
+Make sure the server is running — double-click `Install Conduit.command` on macOS or `Install Conduit.bat` on Windows to install and start. Check `~/Documents/Conduit/server.log` for errors.
 
 **"No model found"**
 You need to pull the model first. Open Terminal and run `ollama pull llama3.2`.
@@ -244,4 +210,4 @@ Free to use, modify, and distribute. See [LICENSE](LICENSE) for details.
 
 ---
 
-*Conduit v1.0 — your session, your AI, your machine.* 🎹
+*Conduit v1.1 — your session, your AI, your machine.* 🎹

@@ -106,13 +106,29 @@ function sleep(ms) {
 
 function findServerPath() {
     var fs = require("fs");
+    var os = require("os");
     var candidates = [
+        path.join(os.homedir(), "Documents", "Conduit", "server", "main.py"),
         path.join(__dirname, "..", "server", "main.py"),
         path.join(__dirname, "server", "main.py"),
         path.join(__dirname, "..", "..", "server", "main.py"),
     ];
     for (var i = 0; i < candidates.length; i++) {
         if (fs.existsSync(candidates[i])) return candidates[i];
+    }
+    return null;
+}
+
+function findPythonCommand() {
+    var execSync = require("child_process").execSync;
+    var commands = process.platform === "win32"
+        ? ["python", "python3", "py"]
+        : ["python3", "python"];
+    for (var i = 0; i < commands.length; i++) {
+        try {
+            var ver = execSync(commands[i] + " --version", { timeout: 5000, stdio: ["ignore", "pipe", "pipe"] }).toString();
+            if (ver.indexOf("Python 3") !== -1) return commands[i];
+        } catch (e) {}
     }
     return null;
 }
@@ -124,22 +140,45 @@ function launchServer() {
         return Promise.resolve(false);
     }
 
-    Max.post("Conduit: launching server from " + serverPath);
+    var pythonCmd = findPythonCommand();
+    if (!pythonCmd) {
+        Max.post("Conduit: Python 3 not found — cannot auto-launch");
+        Max.outlet("status", "server not installed — Python 3 not found");
+        return Promise.resolve(false);
+    }
+
+    Max.post("Conduit: launching server from " + serverPath + " with " + pythonCmd);
     Max.outlet("status", "starting server...");
 
     try {
-        serverProcess = spawn("python3", [serverPath], {
+        serverProcess = spawn(pythonCmd, [serverPath], {
             cwd: path.dirname(serverPath),
             stdio: ["ignore", "pipe", "pipe"],
             detached: true,
         });
 
+        var os = require("os");
+        var logPath = path.join(os.homedir(), "Documents", "Conduit", "server.log");
+        var logStream = null;
+        try {
+            var logFs = require("fs");
+            logFs.mkdirSync(path.dirname(logPath), { recursive: true });
+            logStream = logFs.createWriteStream(logPath, { flags: "w" });
+            Max.post("Conduit: logging to " + logPath);
+        } catch (logErr) {
+            Max.post("Conduit: could not open log file — " + logErr.message);
+        }
+
         serverProcess.stdout.on("data", function (data) {
-            Max.post("[server] " + data.toString().trim());
+            var line = data.toString().trim();
+            Max.post("[server] " + line);
+            if (logStream) logStream.write(line + "\n");
         });
 
         serverProcess.stderr.on("data", function (data) {
-            Max.post("[server] " + data.toString().trim());
+            var line = data.toString().trim();
+            Max.post("[server] " + line);
+            if (logStream) logStream.write(line + "\n");
         });
 
         serverProcess.on("error", function (err) {
@@ -501,13 +540,13 @@ healthCheck().then(function (health) {
     Max.outlet("status", "server offline — auto-launching...");
     return launchServer().then(function (launched) {
         if (!launched) {
-            Max.outlet("status", "server offline — run Start Conduit.command");
+            Max.outlet("status", "server not installed — run Install Conduit");
             return;
         }
 
         var attempt = 0;
         function retry() {
-            if (attempt >= 5) {
+            if (attempt >= 15) {
                 Max.outlet("status", "server launch timeout");
                 return;
             }
@@ -519,7 +558,7 @@ healthCheck().then(function (health) {
                     Max.outlet("status", "connected: " + (h.active_provider || "?") + "/" + (h.active_model || "?"));
                     Max.post("Conduit: connected after " + attempt + " retries");
                 } else {
-                    Max.outlet("status", "waiting for server... (" + attempt + "/5)");
+                    Max.outlet("status", "starting server... (" + attempt + "/15)");
                     return retry();
                 }
             });
@@ -543,7 +582,13 @@ Max.addHandler("bang", function () {
 
 process.on("exit", function () {
     if (serverProcess) {
-        serverProcess.kill();
+        if (process.platform === "win32") {
+            try {
+                spawn("taskkill", ["/pid", serverProcess.pid.toString(), "/f", "/t"], { stdio: "ignore" });
+            } catch (e) {}
+        } else {
+            serverProcess.kill();
+        }
     }
 });
 
