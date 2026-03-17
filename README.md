@@ -2,11 +2,11 @@
   <img src="assets/logo-dark.svg" alt="Conduit" width="295">
 </p>
 
-<h3 align="center">Conduit v1.1 by Jordanaftermidnight</h3>
+<h3 align="center">Conduit v1.0 by Jordanaftermidnight</h3>
 <p align="center">AI MIDI generation for Ableton Live</p>
 <p align="center"><a href="https://maxforlive.com/library/device/14573/conduit-ai-midi-generator">Download on maxforlive.com</a> · <a href="https://ko-fi.com/jordanaftermidnight">Support this project on Ko-fi</a></p>
 
-Conduit is a Max for Live device that connects Ableton Live to a local AI running on your own machine. Type a prompt like *"generate a 4x4 techno drum beat"* and it writes MIDI clips directly into your session. No cloud API keys, no subscriptions, no sending your music anywhere. Everything runs locally and privately through [Ollama](https://ollama.com).
+Conduit is a Max for Live device that connects Ableton Live to a local AI running on your own machine. Type a prompt like *"generate a 4x4 techno drum beat"* and it writes MIDI clips directly into your session. Everything runs locally and privately through [Ollama](https://ollama.com) by default, with optional cloud provider support (Anthropic, OpenAI) if you prefer.
 
 ---
 
@@ -32,7 +32,7 @@ Tell the AI what you want and get MIDI clips written straight into your selected
 
 **Undo** — Changed your mind? Revert the last generated clip instantly.
 
-**100% local** — Runs on Ollama with llama3.2 (3B parameter model). No API keys. No cloud. Works offline once you've pulled the model.
+**Local by default** — Runs on Ollama with llama3.2 (3B parameter model). No subscriptions required. Works offline once you've pulled the model. Optional support for cloud providers (Anthropic, OpenAI) if you prefer.
 
 ---
 
@@ -210,4 +210,4 @@ Free to use, modify, and distribute. See [LICENSE](LICENSE) for details.
 
 ---
 
-*Conduit v1.1 — your session, your AI, your machine.* 🎹
+*Conduit v1.0 — your session, your AI, your machine.* 🎹
