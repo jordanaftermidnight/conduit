@@ -130,13 +130,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Conduit",
     description="AI MIDI generation for Ableton Live",
-    version="1.1.0",
+    version="1.0.0",
     lifespan=lifespan,
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:9321", "http://127.0.0.1:9321"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
