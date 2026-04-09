@@ -18,16 +18,26 @@ echo.
 set "SCRIPT_DIR=%~dp0"
 set "SERVER_SRC=%SCRIPT_DIR%server"
 
-:: Install destinations
-set "CONDUIT_HOME=%USERPROFILE%\Documents\Conduit"
+:: Install destinations — detect OneDrive-redirected Documents folder
+set "DOCS_DIR=%USERPROFILE%\Documents"
+if exist "%USERPROFILE%\OneDrive\Documents\Ableton" (
+    set "DOCS_DIR=%USERPROFILE%\OneDrive\Documents"
+)
+if exist "%USERPROFILE%\OneDrive - *\Documents\Ableton" (
+    for /d %%d in ("%USERPROFILE%\OneDrive - *") do (
+        if exist "%%~d\Documents\Ableton" set "DOCS_DIR=%%~d\Documents"
+    )
+)
+
+set "CONDUIT_HOME=%DOCS_DIR%\Conduit"
 set "SERVER_DST=%CONDUIT_HOME%\server"
 
 :: Ableton User Library path (Windows)
-set "ABLETON_MIDI_FX=%USERPROFILE%\Documents\Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect"
+set "ABLETON_MIDI_FX=%DOCS_DIR%\Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect"
 
-:: Max Packages
-set "MAX8_PKG=%USERPROFILE%\Documents\Max 8\Packages\Conduit\javascript"
-set "MAX9_PKG=%USERPROFILE%\Documents\Max 9\Packages\Conduit\javascript"
+:: Max Packages — check both standard and OneDrive paths
+set "MAX8_PKG=%DOCS_DIR%\Max 8\Packages\Conduit\javascript"
+set "MAX9_PKG=%DOCS_DIR%\Max 9\Packages\Conduit\javascript"
 
 :: ── [1/5] Check Python 3.9+ ─────────────────────────────────
 echo [1/5] Checking Python...
@@ -212,6 +222,8 @@ if defined INSTALL_DIR (
         copy /y "!BRIDGE_SRC!" "!INSTALL_DIR!\" >nul
         echo   Bridge: !INSTALL_DIR!\conduit-bridge.js
     )
+    :: Unblock downloaded files so Windows doesn't prevent M4L from loading them
+    powershell -NoProfile -Command "Get-ChildItem '!INSTALL_DIR!' | Unblock-File" >nul 2>&1
 )
 
 :: Install conduit-bridge.js to Max Packages
@@ -222,6 +234,7 @@ for %%d in ("%MAX8_PKG%" "%MAX9_PKG%") do (
             if not exist "%%~d" mkdir "%%~d"
             if exist "!BRIDGE_SRC!" (
                 copy /y "!BRIDGE_SRC!" "%%~d\" >nul
+                powershell -NoProfile -Command "Unblock-File '%%~d\conduit-bridge.js'" >nul 2>&1
                 echo   Max Package: %%~d\conduit-bridge.js
                 set "INSTALLED_PKG=1"
             )
@@ -230,7 +243,10 @@ for %%d in ("%MAX8_PKG%" "%MAX9_PKG%") do (
 )
 
 if "!INSTALLED_PKG!"=="0" (
-    echo   NOTE: No Max Packages directory found ^(Max 8 or Max 9^).
+    echo   NOTE: Max Packages directory not found ^(Max 8 or Max 9^).
+    echo   conduit-bridge.js was installed next to Conduit.amxd — this usually works.
+    echo   If the device won't load, open Max ^> File ^> Show File Browser, and add
+    echo   the Conduit install folder to Max's search path.
 )
 
 :: ── Done ─────────────────────────────────────────────────────

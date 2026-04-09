@@ -66,6 +66,8 @@ Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and dra
 
 ## Setup — Windows
 
+> **Note:** Conduit requires **Ableton Live Suite** (or Standard/Lite with the Max for Live add-on). If you can load other Max for Live devices, you're good.
+
 ### 1. Install Ollama
 
 Download the Windows installer from [ollama.com/download](https://ollama.com/download) and run it. After installation, Ollama runs in the background automatically.
@@ -190,6 +192,9 @@ Make sure the server is running — double-click `Install Conduit.command` on ma
 
 **"No model found"**
 You need to pull the model first. Open Terminal and run `ollama pull llama3.2`.
+
+**Device visible in browser but won't load onto a MIDI track (Windows)**
+Windows blocks files downloaded from the internet. Right-click `Conduit.amxd` in File Explorer (found in `Documents > Ableton > User Library > Presets > MIDI Effects > Max MIDI Effect > Conduit`), click **Properties**, and check **Unblock** at the bottom of the General tab. Do the same for `conduit-bridge.js` if it's there. Restart Ableton after unblocking. If there's no Unblock checkbox, open **View > Max Console** in Ableton, try loading the device, and check the console output for errors.
 
 **Device shows "initializing..."**
 Give it about 5 seconds. The device needs a moment to handshake with the server.
