@@ -201,7 +201,7 @@ if not exist "!BRIDGE_SRC!" (
 set "INSTALL_DIR="
 if exist "%ABLETON_MIDI_FX%" (
     set "INSTALL_DIR=%ABLETON_MIDI_FX%\Conduit"
-) else if exist "%USERPROFILE%\Documents\Ableton\User Library\Presets\MIDI Effects" (
+) else if exist "%DOCS_DIR%\Ableton\User Library\Presets\MIDI Effects" (
     mkdir "%ABLETON_MIDI_FX%" 2>nul
     set "INSTALL_DIR=%ABLETON_MIDI_FX%\Conduit"
 ) else (

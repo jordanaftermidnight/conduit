@@ -48,17 +48,23 @@ Tell the AI what you want and get MIDI clips written straight into your selected
 
 ## Setup — macOS
 
+> **Note:** Conduit requires **Ableton Live Suite** (or Standard/Lite with the Max for Live add-on). If you can load other Max for Live devices, you're good.
+
 ### 1. Install Ollama
 
 Download from [ollama.com](https://ollama.com), drag it to Applications, and open it once so it finishes installing.
 
-### 2. Install Conduit
+### 2. Install Python (if needed)
+
+Most Macs already have Python 3. To check, open Terminal and type `python3 --version`. If you see "command not found", install it from [python.org/downloads](https://python.org/downloads) or via Homebrew: `brew install python3`.
+
+### 3. Install Conduit
 
 Double-click **`Install Conduit.command`**. It checks your system, downloads the AI model (~2GB first time), installs dependencies, and copies everything into place.
 
 > **Note:** If macOS blocks the script, right-click it and choose **Open** instead of double-clicking.
 
-### 3. Load in Ableton
+### 4. Load in Ableton
 
 Open Ableton's Browser, go to **User Library > MIDI Effects > Conduit**, and drag it onto a MIDI track. The server starts automatically — no terminal window needed.
 
