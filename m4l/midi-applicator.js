@@ -171,22 +171,29 @@ function writeNotesIntoClip(clipApi, notes, clipLength, ccMessages) {
     // (In Max JS, this is synchronous, but calling get forces a round-trip)
     clipApi.get("length");
 
-    // Write notes using set_notes (sequential protocol)
-    clipApi.call("set_notes");
-    clipApi.call("notes", notes.length);
+// Write notes using Live 12+ add_new_notes API
+var noteDicts = [];
 
-    for (var i = 0; i < notes.length; i++) {
-        var n = notes[i];
-        var pitch = Math.max(0, Math.min(127, Math.round(n.pitch)));
-        var vel   = Math.max(1, Math.min(127, Math.round(n.velocity || 100)));
-        var start = Math.max(0, n.start_beat || 0);
-        var dur   = Math.max(0.0625, n.duration_beats || 0.25); // min 1/64 note
-        clipApi.call("note", pitch, start, dur, vel, 0); // 0 = not muted
-        log("  note", i, "pitch=" + pitch, "start=" + start,
-            "dur=" + dur, "vel=" + vel);
-    }
+for (var i = 0; i < notes.length; i++) {
+    var n = notes[i];
+    var pitch = Math.max(0, Math.min(127, Math.round(n.pitch)));
+    var vel   = Math.max(1, Math.min(127, Math.round(n.velocity || 100)));
+    var start = Math.max(0, n.start_beat || 0);
+    var dur   = Math.max(0.0625, n.duration_beats || 0.25);
 
-    clipApi.call("done");
+    noteDicts.push({
+        "pitch": pitch,
+        "start_time": start,
+        "duration": dur,
+        "velocity": vel,
+        "mute": 0
+    });
+
+    log("  note", i, "pitch=" + pitch, "start=" + start,
+        "dur=" + dur, "vel=" + vel);
+}
+
+clipApi.call("add_new_notes", noteDicts);
 
     // Write CC automation if present
     if (ccMessages && ccMessages.length > 0) {
